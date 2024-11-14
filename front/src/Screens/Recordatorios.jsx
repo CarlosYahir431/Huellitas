@@ -14,7 +14,7 @@ import {
     TbEdit, TbSearch
 } from "react-icons/tb";
 
-function App() {
+function Recordatorios() {
     // Estado para controlar el formulario a mostrar
     const [formType, setFormType] = useState(null);
 
@@ -635,4 +635,4 @@ function App() {
     );
 }
 
-export default App;
+export default Recordatorios;

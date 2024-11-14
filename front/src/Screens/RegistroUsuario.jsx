@@ -1,7 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Frame from '../img/hombre.mp4'; // Asegúrate de que la ruta sea correcta
 
 function RegistroUsuario() {
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+
+  function handleRegistro(e){
+    e.preventDefault();
+
+    axios
+    .post("http://locahost:8000", {
+      body: {
+        email: email,
+        password: password,
+        name: name
+      }
+    })
+    .then((response) => {
+      setPost(response.data);
+    });
+  }
+
+
+
   return (
     <div className="flex h-screen items-center justify-center bg-gradient-to-r from-pink-100 via-blue-100 to-purple-100 relative">
 
@@ -23,14 +47,19 @@ function RegistroUsuario() {
         <div className="w-1/2 p-8">
           <h2 className="text-4xl font-semibold text-morado text-center my-4">Registrarse</h2>
           <p className="text-gray-500 text-center mt-2">Registra tus datos para poder continuar</p>
-          <form className="mt-1">
+          <form className="mt-1" onSubmit={handleRegistro}>
 
             <div className="mb-2 my-12">
-              <label className="block text-gray-700">Nombre</label>
+              <label className="block text-gray-700">Nombre Completo</label>
               <input
                 type="text" // Cambié el tipo de campo a "text" para el nombre
                 className="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
-                placeholder="ejemplo"
+                placeholder="Juanito Perez"
+                name='username'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                minLength={5}
+                required
               />
             </div>
             
@@ -40,6 +69,10 @@ function RegistroUsuario() {
                 type="email" // Cambié el tipo de campo a "email" para el correo electrónico
                 className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
                 placeholder="ejemplo@gmail.com"
+                name='email'
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                required
               />
             </div>
             <div className="mb-2">
@@ -47,7 +80,12 @@ function RegistroUsuario() {
               <input
                 type="password"
                 className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
-                placeholder="********"
+                placeholder="********"  
+                required
+                minLength={8}
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                name='password'
               />
             </div>
             <div className="mb-2">
@@ -56,6 +94,11 @@ function RegistroUsuario() {
                 type="password"
                 className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
                 placeholder="********"
+                required
+                minLength={8}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                value={confirmPassword}
+                name='confirmPassword'
               />
             </div>
             <button
