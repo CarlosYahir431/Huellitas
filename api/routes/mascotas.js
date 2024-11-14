@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const { query } = require("../db");
-const authenticateJWT = require('./middleware');
+const authenticateJWT = require('../middleware/middleware');
 const secret = process.env.JWT_SECRET;
 
 router.get("/", (req, res) => {
@@ -23,11 +23,11 @@ router.get("/", (req, res) => {
 })
 
 router.post("/register", (req, res) => {
-    const { user_id, name, birth_date, sex, species, breed, color, characteristics } = req.body;
+    const { user_id, name, sex, species, breed, color, characteristics } = req.body;
   
-    const sqlMascota = 'INSERT INTO Pets (user_id, name, birth_date, sex, species, breed, color, characteristics) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+    const sqlMascota = 'INSERT INTO Pets (user_id, name, sex, species, breed, color, characteristics) VALUES (?, ?, ?, ?, ?, ?, ?)';
   
-    query(sqlMascota, [user_id, name, birth_date, sex, species, breed, color, characteristics], (err, results) => {
+    query(sqlMascota, [user_id, name, sex, species, breed, color, characteristics], (err, results) => {
       if (err) {
         console.error(err);
         return res.status(500).send('Internal server error.');
@@ -39,12 +39,12 @@ router.post("/register", (req, res) => {
   
   })
 
-router.update("/update", (req, res) => {
-    const { id, name, birth_date, sex, species, breed, color, characteristics } = req.body;
+router.patch("/update", (req, res) => {
+    const { id, name, sex, species, breed, color, characteristics } = req.body;
   
-    const sqlMascota = 'UPDATE Pets (name, birth_date, sex, species, breed, color, characteristics) VALUES (?, ?, ?, ?, ?, ?, ?, ?) WHERE id = ?';
+    const sqlMascota = 'UPDATE Pets (name, sex, species, breed, color, characteristics) VALUES (?, ?, ?, ?, ?, ?, ?) WHERE id = ?';
   
-    query(sqlMascota, [id, name, birth_date, sex, species, breed, color, characteristics], (err, results) => {
+    query(sqlMascota, [id, name , sex, species, breed, color, characteristics], (err, results) => {
       if (err) {
         console.error(err);
         return res.status(500).send('Internal server error.');

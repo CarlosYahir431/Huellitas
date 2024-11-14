@@ -6,6 +6,10 @@ import { TbChevronDown, TbBell } from "react-icons/tb";
 
 const Header = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  // Verificar si existe y obtener el nombre
+  const username = user?.username || "Error";
 
   // Lista de perfiles
   const profiles = [
@@ -22,7 +26,7 @@ const Header = () => {
   return (
     <header className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8">
       <h1 className="text-2xl md:text-3xl text-morado font-bold">
-        Bienvenido, <span className="text-gray-500">Boris</span>
+        Bienvenido, {username}<span className="text-gray-500"></span>
       </h1>
       <nav>
         <ul className="flex items-center gap-4">

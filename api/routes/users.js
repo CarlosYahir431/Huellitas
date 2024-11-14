@@ -5,13 +5,13 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const { query } = require("../db");
-const authenticateJWT = require('./middleware');
+const authenticateJWT = require('../middleware/middleware');
 const secret = process.env.JWT_SECRET;
 
 // POST endpoint para iniciar sesión
 router.post("/login", (req, res) => {
     const { email, password } = req.body;
-  
+    
     if (!email || !password) {
       return res.status(400).send('Correo y contraseña requeridos.');
     }
@@ -35,14 +35,19 @@ router.post("/login", (req, res) => {
         // Generate JWT
         const token = jwt.sign({ id: user.user_id, name: user.name }, secret, { expiresIn: '1h' });
         delete user.password;
+        const username = user.name;
+        const id = user.user_id;
         //add expiration time to the respone
-        return res.json({ token, user, exp: Math.floor(Date.now() / 1000) + (60 * 60) });
+        return res.json({ token, exp: Math.floor(Date.now() / 1000) + (60 * 60), username, id });
       } else {
         return res.status(401).send('Correo o contraseña incorrecto.');
       }
     });
   });
 
+router.get("/validate", (req,res) =>{
+  
+})
 
 router.post("/register", (req, res) => {
   const { email, password, name } = req.body;
@@ -56,7 +61,7 @@ router.post("/register", (req, res) => {
       return res.status(500).send('Internal server error.');
     }
 
-    return res.json({ message: 'Usuario creado exitosamente.' });
+    return res.json({ message: 'Usuario creado exitosamente.', results });
   });
 
 
