@@ -9,6 +9,10 @@ function RegistroMascota() {
   const [raza, setRaza] = useState("");
   const [color, setColor] = useState("");
   const [caracteristicas, setCaracteristicas] = useState("");
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  // Verificar si existe y obtener el nombre
+  const userId = user?.id || "null";
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -27,7 +31,7 @@ function RegistroMascota() {
       const response = await axios.post(
         "http://localhost:3001/mascotas/register",
           {
-            user_id: 1,
+            user_id: userId,
             name: name,
             sex: sexo,
             species: especie,

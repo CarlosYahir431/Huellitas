@@ -8,7 +8,7 @@ const { query } = require("../db");
 const authenticateJWT = require('../middleware/middleware');
 const secret = process.env.JWT_SECRET;
 
-router.get("/", (req, res) => {
+router.post("/", (req, res) => {
     const { user_id } = req.body;
     const sql = 'SELECT * FROM Pets where user_id = ?';
   
@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
         console.error(err);
         return res.status(500).send('Internal server error.');
       }
-  
+      
       return res.json(results[0]);
     });
 })

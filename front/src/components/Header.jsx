@@ -3,6 +3,7 @@ import FotoPerro1 from "../img/FotoPerro1.jpg";
 import FotoPerro2 from "../img/FotoPerro1.jpg";
 import FotoPerro3 from "../img/FotoPerro1.jpg";
 import { TbChevronDown, TbBell } from "react-icons/tb";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -59,9 +60,9 @@ const Header = () => {
                       <span className="text-sm font-medium">{profile.name}</span>
                     </li>
                   ))}
-                  <li className="py-2 px-4 text-morado text-sm font-medium hover:bg-gray-100 rounded-lg cursor-pointer">
+                  <Link to={"/mascota"} className="py-2 px-4 text-morado text-sm font-medium hover:bg-gray-100 rounded-lg cursor-pointer">
                     Agregar perfil
-                  </li>
+                  </Link>
                 </ul>
               </div>
             )}
