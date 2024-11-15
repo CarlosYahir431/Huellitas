@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import Frame from '../img/hombre.mp4'; // Asegúrate de que la ruta sea correcta
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import Frame from "../img/hombre.mp4"; // Asegúrate de que la ruta sea correcta
+import { Link, useNavigate } from "react-router-dom";
 
 function RegistroUsuario() {
   const [name, setName] = useState("");
@@ -10,6 +10,7 @@ function RegistroUsuario() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();
 
   // Función para manejar el registro
   const handleRegistro = async (e) => {
@@ -25,18 +26,40 @@ function RegistroUsuario() {
 
     try {
       // Enviar la solicitud a tu servidor
-      const response = await axios.post("http://localhost:3001/users/register", {
-        email: email,
-        password: password,
-        name: name
-      });
+      const response = await axios.post(
+        "http://localhost:3001/users/register",
+        {
+          email: email,
+          password: password,
+          name: name,
+        }
+      );
 
-      if (response.status === 201) {
-        setSuccessMessage("¡Registro exitoso! Ahora puedes iniciar sesión.");
+      if (response.status === 200) {
+        try {
+          const responseLog = await axios.post(
+            "http://localhost:3001/users/login",
+            {
+              email: email,
+              password: password,
+            }
+          );
+
+          localStorage.setItem("user", JSON.stringify(responseLog.data));
+
+          navigate("/");
+        } catch (error) {
+          console.error(error);
+          setError(
+            "Ocurrió un error al registrarse. Por favor, intenta nuevamente."
+          );
+        }
       }
     } catch (error) {
       console.error(error);
-      setError("Ocurrió un error al registrarse. Por favor, intenta nuevamente.");
+      setError(
+        "Ocurrió un error al registrarse. Por favor, intenta nuevamente."
+      );
     }
   };
 
@@ -58,12 +81,18 @@ function RegistroUsuario() {
 
         {/* Sección del Formulario */}
         <div className="w-1/2 p-8">
-          <h2 className="text-4xl font-semibold text-morado text-center my-4">Registrarse</h2>
-          <p className="text-gray-500 text-center mt-2">Registra tus datos para poder continuar</p>
+          <h2 className="text-4xl font-semibold text-morado text-center my-4">
+            Registrarse
+          </h2>
+          <p className="text-gray-500 text-center mt-2">
+            Registra tus datos para poder continuar
+          </p>
 
           {/* Mostrar mensajes de error y éxito */}
           {error && <p className="text-red-500 text-center">{error}</p>}
-          {successMessage && <p className="text-green-500 text-center">{successMessage}</p>}
+          {successMessage && (
+            <p className="text-green-500 text-center">{successMessage}</p>
+          )}
 
           <form className="mt-1" onSubmit={handleRegistro}>
             <div className="mb-2 my-12">
@@ -105,7 +134,9 @@ function RegistroUsuario() {
             </div>
 
             <div className="mb-2">
-              <label className="block text-gray-700">Confirmar Contraseña</label>
+              <label className="block text-gray-700">
+                Confirmar Contraseña
+              </label>
               <input
                 type="password"
                 className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
@@ -126,7 +157,10 @@ function RegistroUsuario() {
           </form>
 
           <p className="text-sm text-gray-500 mt-4 text-center">
-            ¿Ya tienes una cuenta? <Link to={"/login"} className="text-[#374BFF]">Inicia aquí</Link>
+            ¿Ya tienes una cuenta?{" "}
+            <Link to={"/login"} className="text-[#374BFF]">
+              Inicia aquí
+            </Link>
           </p>
         </div>
       </div>
