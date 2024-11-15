@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import LogoHuellitas from "../img/LogoHuellitas.png";
 
 // Icons
@@ -27,6 +27,11 @@ import {
 const Sidebar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  function logOut(){
+    localStorage.removeItem("user");
+    navigate("/login");
+  }
 
   const isActive = (path) => location.pathname === path;
 
@@ -54,48 +59,68 @@ const Sidebar = () => {
               <TbHome /> Inicio
             </Link>
 
-            <Link to={"/recordatorios"}
+            <Link
+              to={"/recordatorios"}
               className={`flex items-center gap-2 transition-all ${
                 isActive("/recordatorios") ? "translate-x-4 font-bold" : ""
-              }`}>
+              }`}
+            >
               <TbCalendarStats /> Recordatorios
             </Link>
 
-            <Link to={"/salud"}  className={`flex items-center gap-2 transition-all ${
+            <Link
+              to={"/salud"}
+              className={`flex items-center gap-2 transition-all ${
                 isActive("/salud") ? "translate-x-4 font-bold" : ""
-              }`}>
+              }`}
+            >
               <TbHeart /> Salud
             </Link>
-            <Link to={"/alimento"}  className={`flex items-center gap-2 transition-all ${
+            <Link
+              to={"/alimento"}
+              className={`flex items-center gap-2 transition-all ${
                 isActive("/alimento") ? "translate-x-4 font-bold" : ""
-              }`}>
+              }`}
+            >
               <TbPaperBag /> Alimento
             </Link>
-            <Link to={"/actividad"}  className={`flex items-center gap-2 transition-all ${
+            <Link
+              to={"/actividad"}
+              className={`flex items-center gap-2 transition-all ${
                 isActive("/actividad") ? "translate-x-4 font-bold" : ""
-              }`}>
+              }`}
+            >
               <TbPaw /> Actividad
             </Link>
-            <Link to={"documentacion"}  className={`flex items-center gap-2 transition-all ${
+            <Link
+              to={"documentacion"}
+              className={`flex items-center gap-2 transition-all ${
                 isActive("/documentacion") ? "translate-x-4 font-bold" : ""
-              }`}>
+              }`}
+            >
               <TbAlignBoxLeftTop /> Documentos
             </Link>
-            <Link to={"/lugares"}  className={`flex items-center gap-2 transition-all ${
+            <Link
+              to={"/lugares"}
+              className={`flex items-center gap-2 transition-all ${
                 isActive("/lugares") ? "translate-x-4 font-bold" : ""
-              }`}>
+              }`}
+            >
               <TbMap2 /> Lugares
             </Link>
-            <Link to={"/perfil"}  className={`flex items-center gap-2 transition-all ${
+            <Link
+              to={"/perfil"}
+              className={`flex items-center gap-2 transition-all ${
                 isActive("/perfil") ? "translate-x-4 font-bold" : ""
-              }`}>
+              }`}
+            >
               <TbUser /> Perfil
             </Link>
           </nav>
           <div className="bg-primary-900/50 text-white text-base font-semibold  p-4 rounded-xl">
-            <Link to={"/login"}>
+            <button onClick={logOut}>
               <TbLogout /> Cerrar Sesión
-            </Link>
+            </button>
           </div>
         </div>
       </div>

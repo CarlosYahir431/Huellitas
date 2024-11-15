@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Frame from "../img/Frame.png";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -8,6 +8,14 @@ function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+
+    if (user) {
+      navigate("/");
+    }
+  }, []);
+
   async function HandleLogin(e) {
     e.preventDefault();
     try {
@@ -15,8 +23,8 @@ function Login() {
         email: email,
         password: password,
       });
-      
-      localStorage.setItem("user", JSON.stringify(response.data))
+
+      localStorage.setItem("user", JSON.stringify(response.data));
 
       navigate("/");
     } catch (error) {

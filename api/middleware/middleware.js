@@ -5,12 +5,14 @@ const secret = process.env.JWT_SECRET;
 
 const authenticateJWT = (req, res, next) => {
     const token = req.header('Authorization') ? req.header('Authorization').split(' ')[1] : null;
+
     if (token) {
         jwt.verify(token, secret, (err, user) => {
             if (err) {
                 console.log(err);
                 return res.sendStatus(403);
             }
+            console.log(user);
             req.user = user;
             next();
         });
