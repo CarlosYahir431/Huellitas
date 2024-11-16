@@ -9,10 +9,15 @@ function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
-
+    const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
-      navigate("/");
+      const currentTime = Math.floor(Date.now() / 1000);
+      
+      if(user.exp < currentTime){
+        localStorage.removeItem("user");
+      }else{
+        navigate("/");
+      }
     }
   }, []);
 

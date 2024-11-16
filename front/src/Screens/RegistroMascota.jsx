@@ -30,19 +30,19 @@ function RegistroMascota() {
     try {
       const response = await axios.post(
         "http://localhost:3001/mascotas/register",
-          {
-            user_id: userId,
-            name: name,
-            sex: sexo,
-            species: especie,
-            breed: raza,
-            color: color,
-            characteristics: caracteristicas,
-          }
+        {
+          user_id: userId,
+          name: name,
+          sex: sexo,
+          species: especie,
+          breed: raza,
+          color: color,
+          characteristics: caracteristicas,
+        }
       );
-      console.log(response)
+      console.log(response);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
@@ -55,7 +55,10 @@ function RegistroMascota() {
         <p className="text-gray-500 text-center mt-2">
           Registra los datos de tu mascota para continuar
         </p>
-        <form className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6" onSubmit={handleRegisterPet}>
+        <form
+          className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6"
+          onSubmit={handleRegisterPet}
+        >
           {/* Columna de Datos generales */}
           <div>
             <div className="mb-4">
@@ -149,7 +152,7 @@ function RegistroMascota() {
                 placeholder="Escribe algunas características de tu mascota"
                 name="caracteristicas"
                 value={caracteristicas}
-                onChange={(e)=>(setCaracteristicas(e.target.value))}
+                onChange={(e) => setCaracteristicas(e.target.value)}
               />
             </div>
 

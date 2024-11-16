@@ -63,7 +63,21 @@ router.post("/register", (req, res) => {
 
     return res.json({ message: 'Usuario creado exitosamente.', results });
   });
+})
 
+router.delete("/delete", authenticateJWT, (req, res) =>{
+  const { id, password } = req.body;
 
+  const sql = 'DELETE FROM Users WHERE id = ?';
+ //checar que la contra sea correcta y si lo es entonces eliminar el usuario
+
+  query(sql, [id], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Internal server error.');
+    }
+
+    return res.json({ message: 'Usuario eliminado exitosamente.' });
+  });
 })
 module.exports = router;

@@ -21,4 +21,21 @@ const authenticateJWT = (req, res, next) => {
     }
 };
 
-module.exports = authenticateJWT;
+const hasPermission = (req, res, next) => {
+    const token = req.header('Authorization') ? req.header('Authorization').split(' ')[1] : null;
+
+    if (token) {
+        jwt.verify(token, secret, (err, user) => {
+            if (err) {
+                console.log(err);
+                return res.sendStatus(403);
+            }
+
+            req.user = user;
+            next();
+        });
+    } else {
+        res.sendStatus(401);
+    }
+};
+module.exports = {authenticateJWT};

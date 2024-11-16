@@ -1,18 +1,13 @@
 //Componentes
 import { Link } from "react-router-dom";
-
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
-
-//Imagenes
 import FotoPerro1 from "../img/FotoPerro1.jpg";
 import ClinicaHuellitas from "../img/Clinica Huellitas.jpg";
 import ParqueHuellitas from "../img/Parque Huellitas.jpg";
 import GuarderiaHuellitas from "../img/Guarderia Huellitas.jpg";
 import Casa from "../img/Casa.jpg";
 import React, { useEffect, useState } from "react";
-
-// Iconos
 import { TbHeart, TbPaperBag, TbPaw, TbBellRinging } from "react-icons/tb";
 import axios from "axios";
 
@@ -23,16 +18,15 @@ function App() {
 
   useEffect(() => {
     getPets();
-      console.log(perros);
   }, []);
 
   async function getPets() {
     const response = await axios.post("http://localhost:3001/mascotas", {
       user_id: userId,
     });
-    // Verificar si la respuesta tiene datos
-    if (response.data && response.data.length > 0) {
-      const mascota = response.data; // Si hay varias mascotas, toma la primera
+
+    if (response.data) {
+      const mascota = response.data;
       const datosPerro = {
         raza: mascota.breed,
         caracteristica: mascota.characteristics,
@@ -43,7 +37,6 @@ function App() {
         species: mascota.species,
       };
 
-      // Actualiza el estado con los datos de la mascota
       setPerros(datosPerro);
     }
   }
@@ -76,13 +69,15 @@ function App() {
             <div className="flex flex-col">
               <h1 className="text-3xl text-morado font-bold">{perros.name}</h1>
               <div className="flex-col gap-2 my-8 p-2">
-                <p className="text-base text-gray-500">Sexo: Femenino</p>
-                <p className="text-base text-gray-500">Especie: Perro</p>
-                <p className="text-base text-gray-500">Color: Marrón</p>
                 <p className="text-base text-gray-500">
-                  Características: Perrito pequeño, manchita en la patita
-                  derecha, sus orejitas tienen el pelaje más oscuro, no ladra
-                  mucho y tiene un collar beige.
+                  Sexo: {perros.sex == "M" ? "Macho" : "Hembra"}
+                </p>
+                <p className="text-base text-gray-500">
+                  Especie: {perros.species}
+                </p>
+                <p className="text-base text-gray-500">Color: {perros.color}</p>
+                <p className="text-base text-gray-500">
+                  Caracteristicas: {perros.caracteristica}
                 </p>
               </div>
             </div>
