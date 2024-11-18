@@ -7,16 +7,30 @@ const router = express.Router();
 const { query } = require("../db");
 const authenticateJWT = require("../middleware/middleware");
 
-router.post("/", (req, res) => {
-    const { id } = req.body;
-    const sql = `SELECT * FROM foods where pet_id = ?`;
-    query(sql, [id], (err, results) => {
+router.get("/", (req, res) => {
+    const sql = `SELECT food_id,pet_id,name,date_format(foods.feeding_date,'%d/%m/%Y') as feeding_date,feeding_time FROM foods  `;
+
+    query(sql, (err, results) => {
         if (err) {
             console.error(err);
             return res.status(500).send("Internal server error.");
         }
 
-        return res.json(results[0]);
+        return res.json(results);
+    });
+});
+
+router.get("/contar", (req, res) => {
+    const sql = `SELECT COUNT(*) AS total FROM foods`;
+
+    query(sql, (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Internal server error.');
+        }
+
+        // Enviar el resultado de la cuenta como respuesta JSON
+        return res.json({ total: results[0].total });
     });
 });
 
@@ -36,7 +50,7 @@ router.post("/create", (req, res) => {
 });
 
 router.patch("/update", (req, res) => {
-    const { food_id, pet_id, name, feeding_date, feeding_time } = req.body;
+    const { pet_id, name, feeding_date, feeding_time, food_id } = req.body;
 
     const sql = `UPDATE foods (pet_id,name,feeding_date,feeding_time,status_id) SET (?,?,?,?,?,?) WHERE food_id = ?`;
 

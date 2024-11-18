@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Frame from "../img/hombre.mp4"; // Asegúrate de que la ruta sea correcta
 import axios from "axios";
@@ -33,6 +33,10 @@ function Recordatorios() {
   const [place_actividad, setPlace_actividad] = useState("");
   const [fecha_actividad, setFecha_actividad] = useState("");
   const [hora_actividad, setHora_actividad] = useState("");
+  //contador
+  const [salud, setSalud] = useState({});
+  const [actividad, setActividad] = useState({});
+  const [comida, setComida] = useState({});
 
   async function handlecreatesalud(e) {
     e.preventDefault();
@@ -46,8 +50,57 @@ function Recordatorios() {
         event_time: hora,
       });
       console.log(response);
+      window.location.reload(true);
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async function handledeletesalud(e, health_id) {
+    e.preventDefault();
+    try {
+      const response = await axios.delete(
+        "http://localhost:3001/salud/delete",
+        {
+          data: { health_id }, // Aquí enviamos el ID en el cuerpo de la solicitud
+        }
+      );
+      console.log(response.data);
+      window.location.reload(true);
+    } catch (error) {
+      console.error("Error al eliminar el registro:", error);
+    }
+  }
+
+  async function handledeleteactividad(e, activity_id) {
+    e.preventDefault();
+    try {
+      const response = await axios.delete(
+        "http://localhost:3001/actividad/delete",
+        {
+          data: { activity_id }, // Aquí enviamos el ID en el cuerpo de la solicitud
+        }
+      );
+      console.log(response.data);
+      window.location.reload(true);
+    } catch (error) {
+      console.error("Error al eliminar el registro:", error);
+    }
+  }
+
+  async function handledeletecomida(e,food_id) {
+    e.preventDefault();
+    try {
+      const response = await axios.delete(
+        "http://localhost:3001/comida/delete",
+        {
+          data: {food_id }, // Aquí enviamos el ID en el cuerpo de la solicitud
+        }
+      );
+      console.log(response.data);
+      window.location.reload(true);
+    } catch (error) {
+      console.error("Error al eliminar el registro:", error);
     }
   }
 
@@ -61,6 +114,7 @@ function Recordatorios() {
         feeding_time: hora_alimento,
       });
       console.log(response);
+      window.location.reload(true);
     } catch (error) {
       console.log(error);
     }
@@ -80,10 +134,89 @@ function Recordatorios() {
         }
       );
       console.log(response);
+      window.location.reload(true);
     } catch (error) {
       console.log(error);
     }
   }
+  //get de todo
+  const [salud_all, setSalud_all] = useState("");
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3001/salud`)
+      .then((response) => {
+        const salud_allData = response.data;
+        setSalud_all(salud_allData);
+      })
+      .catch((error) => {
+        console.error("Error al hacer la solicitud:", error);
+      });
+  }, []);
+
+  const [alimento_all, setAlimento_all] = useState("");
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3001/comida`)
+      .then((response) => {
+        const alimento_allData = response.data;
+        setAlimento_all(alimento_allData);
+      })
+      .catch((error) => {
+        console.error("Error al hacer la solicitud:", error);
+      });
+  }, []);
+
+  const [actividades_all, setActividades_all] = useState("");
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3001/actividad`)
+      .then((response) => {
+        const actividades_allData = response.data;
+        setActividades_all(actividades_allData);
+      })
+      .catch((error) => {
+        console.error("Error al hacer la solicitud:", error);
+      });
+  }, []);
+
+  //Contadores
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3001/salud/contar`)
+      .then((response) => {
+        const saludData = response.data; // Aquí response.data es un objeto, no un array
+        setSalud(saludData); // Actualiza el estado con el objeto recibido
+      })
+      .catch((error) => {
+        console.error("Error al hacer la solicitud:", error);
+      });
+  }, []);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3001/comida/contar`)
+      .then((response) => {
+        const comidaData = response.data;
+        setComida(comidaData);
+      })
+      .catch((error) => {
+        console.error("Error al hacer la solicitud:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3001/actividad/contar`)
+      .then((response) => {
+        const actividadData = response.data;
+        setActividad(actividadData);
+      })
+      .catch((error) => {
+        console.error("Error al hacer la solicitud:", error);
+      });
+  }, []);
 
   // Función para cerrar el modal
   const closeModal = () => setFormType(null);
@@ -248,7 +381,7 @@ function Recordatorios() {
                     className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
                     placeholder="croquetas"
                     value={name_actividad}
-                    onChange={(e)=>setName_actividad(e.target.value)}
+                    onChange={(e) => setName_actividad(e.target.value)}
                   />
                 </div>
                 <div className="mb-2">
@@ -514,11 +647,15 @@ function Recordatorios() {
           {/* Card 1: Salud */}
           <div className="bg-red-500 p-8 rounded-xl text-gray-300 flex flex-col gap-2">
             <TbHeart className="text-5xl" />
-            <h4 className="text-3xl text-white">Salud</h4>
-            <span className="text-5xl text-white">5</span>
+            <h4 className="text-2xl text-white">Salud</h4>
+            {/* Mostrar el total directamente */}
+            <span className="text-5xl text-white">
+              {salud.total !== undefined ? salud.total : "Cargando..."}
+            </span>
             <span className="text-base text-gray-100">Recordatorios</span>
+
             <button
-              className="py-3 px-3 bg-gray-100 font-medium mt-auto text-red-500 rounded-full"
+              className="py-3 px-3 bg-gray-100 font-medium mt-auto text-orange-500 rounded-full"
               onClick={() => setFormType("salud")}
             >
               Agregar
@@ -528,7 +665,9 @@ function Recordatorios() {
           <div className="bg-orange-500 p-8 rounded-xl text-gray-300 flex flex-col gap-2">
             <TbPaperBag className="text-5xl " />
             <h4 className="text-2xl text-white">Alimento</h4>
-            <span className="text-5xl text-white">5</span>
+            <span className="text-5xl text-white">
+              {comida.total !== undefined ? comida.total : "Cargando..."}
+            </span>
             <span className="text-base text-gray-100">Recordatorios</span>
             <button
               className="py-3 px-3 bg-gray-100 font-medium mt-auto text-orange-500 rounded-full"
@@ -541,7 +680,9 @@ function Recordatorios() {
           <div className="bg-purple-500 p-8 rounded-xl text-gray-300 flex flex-col gap-2">
             <TbPaw className="text-5xl" />
             <h4 className="text-2xl text-white">Actividad</h4>
-            <span className="text-5xl text-white">5</span>
+            <span className="text-5xl text-white">
+              {actividad.total !== undefined ? actividad.total : "Cargando..."}
+            </span>{" "}
             <span className="text-base text-gray-100">Recordatorios</span>
             <button
               className="py-3 px-3 bg-gray-100 font-medium mt-auto text-purple-500 rounded-full"
@@ -588,17 +729,18 @@ function Recordatorios() {
             />
             <TbSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           </div>
+
           <table className="min-w-full bg-white my-4">
             <thead>
               <tr>
                 <th className="py-2 px-4 font-medium border-b text-center">
-                  Numero
-                </th>
-                <th className="py-2 px-4 font-medium border-b text-center">
-                  Tipo
+                  ID
                 </th>
                 <th className="py-2 px-4 font-medium border-b text-center">
                   Nombre
+                </th>
+                <th className="py-2 px-4 font-medium border-b text-center">
+                  Tipo
                 </th>
                 <th className="py-2 px-4 font-medium border-b text-center">
                   Lugar
@@ -609,28 +751,57 @@ function Recordatorios() {
                 <th className="py-2 px-4 font-medium border-b text-center">
                   Hora
                 </th>
+                <th className="py-2 px-4 font-medium border-b text-center">
+                  Acciones
+                </th>
+
                 <th className="py-2 px-4 font-medium border-b text-center"></th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className="py-2 px-4 border-b text-center">1</td>
-                <td className="py-2 px-4 border-b text-center">Vacuna</td>
-                <td className="py-2 px-4 border-b text-center">Parvovirus</td>
-                <td className="py-2 px-4 border-b text-center">
-                  Clinica Huellitas
-                </td>
-                <td className="py-2 px-4 border-b text-center">11-11-2024</td>
-                <td className="py-2 px-4 border-b text-center">12:07 P.m.</td>
-                <td className="py-2 px-4 border-b text-center justify-center gap-4">
-                  <button onClick={() => setFormType2("salud")}>
-                    <TbEdit className="text-green-500 text-2xl mx-4 hover:text-green-700" />
-                  </button>
-                  <button>
-                    <TbTrash className="text-red-500 text-2xl hover:text-red-700" />
-                  </button>
-                </td>
-              </tr>
+              {salud_all.length > 0 ? (
+                salud_all.map((item, index) => (
+                  <tr key={item.health_id}>
+                    <td className="py-2 px-4 border-b text-center">
+                      {index + 1}
+                    </td>
+                    <td className="py-2 px-4 border-b text-center">
+                      {item.name}
+                    </td>
+                    <td className="py-2 px-4 border-b text-center">
+                      {item.type_name}
+                    </td>
+                    <td className="py-2 px-4 border-b text-center">
+                      {item.place_name}
+                    </td>
+                    <td className="py-2 px-4 border-b text-center">
+                      {item.event_date}
+                    </td>
+                    <td className="py-2 px-4 border-b text-center">
+                      {item.event_time}
+                    </td>
+                    <td className="py-2 px-4 border-b text-center justify-center gap-4">
+                      <button onClick={() => setFormType2("salud")}>
+                        <TbEdit className="text-green-500 text-2xl mx-4 hover:text-green-700" />
+                      </button>
+                      <button
+                        onClick={(e) => handledeletesalud(e, item.health_id)}
+                      >
+                        <TbTrash className="text-red-500 text-2xl hover:text-red-700" />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan={6}
+                    className="px-4 py-2 text-center text-gray-500"
+                  >
+                    No hay registros disponibles
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
@@ -650,13 +821,10 @@ function Recordatorios() {
             <thead>
               <tr>
                 <th className="py-2 px-4 font-medium border-b text-center">
-                  Numero
+                  ID
                 </th>
                 <th className="py-2 px-4 font-medium border-b text-center">
-                  Alimento
-                </th>
-                <th className="py-2 px-4 font-medium border-b text-center">
-                  Lugar
+                  Nombre
                 </th>
                 <th className="py-2 px-4 font-medium border-b text-center">
                   Fecha
@@ -664,25 +832,47 @@ function Recordatorios() {
                 <th className="py-2 px-4 font-medium border-b text-center">
                   Hora
                 </th>
-                <th className="py-2 px-4 font-medium border-b text-center"></th>
+                <th className="py-2 px-4 font-medium border-b text-center">
+                  Acciones
+                </th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className="py-2 px-4 border-b text-center">1</td>
-                <td className="py-2 px-4 border-b text-center">Croquetas</td>
-                <td className="py-2 px-4 border-b text-center">Casa</td>
-                <td className="py-2 px-4 border-b text-center">11-11-2024</td>
-                <td className="py-2 px-4 border-b text-center">12:07 P.m.</td>
-                <td className="py-2 px-4 border-b text-center justify-center gap-4">
-                  <button onClick={() => setFormType2("alimento")}>
-                    <TbEdit className="text-green-500 text-2xl mx-4 hover:text-green-700" />
-                  </button>
-                  <button>
-                    <TbTrash className="text-red-500 text-2xl hover:text-red-700" />
-                  </button>
-                </td>
-              </tr>
+              {alimento_all.length > 0 ? (
+                alimento_all.map((item, index) => (
+                  <tr key={item.food_id}>
+                    <td className="py-2 px-4 border-b text-center">
+                      {index + 1}
+                    </td>
+                    <td className="py-2 px-4 border-b text-center">
+                      {item.name}
+                    </td>
+                    <td className="py-2 px-4 border-b text-center">
+                      {item.feeding_date}
+                    </td>
+                    <td className="py-2 px-4 border-b text-center">
+                      {item.feeding_time}
+                    </td>
+                    <td className="py-2 px-4 border-b text-center justify-center gap-4">
+                      <button onClick={() => setFormType2("alimento")}>
+                        <TbEdit className="text-green-500 text-2xl mx-4 hover:text-green-700" />
+                      </button>
+                      <button onClick={(e) => handledeletecomida(e, item.food_id)}>
+                        <TbTrash className="text-red-500 text-2xl hover:text-red-700" />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan={6}
+                    className="px-4 py-2 text-center text-gray-500"
+                  >
+                    No hay registros disponibles
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
@@ -720,26 +910,47 @@ function Recordatorios() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className="py-2 px-4 border-b text-center">1</td>
-                <td className="py-2 px-4 border-b text-center">Dar un Paseo</td>
-                <td className="py-2 px-4 border-b text-center">
-                  Parque Huellitas
-                </td>
-                <td className="py-2 px-4 border-b text-center">11-11-2024</td>
-                <td className="py-2 px-4 border-b text-center">12:07 P.m.</td>
-                <td className="py-2 px-4 border-b text-center justify-center gap-4">
-                  <button>
-                    <TbEdit
-                      onClick={() => setFormType2("actividad")}
-                      className="text-green-500 text-2xl mx-4 hover:text-green-700"
-                    />
-                  </button>
-                  <button>
-                    <TbTrash className="text-red-500 text-2xl hover:text-red-700" />
-                  </button>
-                </td>
-              </tr>
+              {actividades_all.length > 0 ? (
+                actividades_all.map((item, index) => (
+                  <tr key={item.activity_id}>
+                    <td className="py-2 px-4 border-b text-center">
+                      {index + 1}
+                    </td>
+                    <td className="py-2 px-4 border-b text-center">
+                      {item.name}
+                    </td>
+                    <td className="py-2 px-4 border-b text-center">
+                      {item.place_name}
+                    </td>
+                    <td className="py-2 px-4 border-b text-center">
+                      {item.activity_date}
+                    </td>
+                    <td className="py-2 px-4 border-b text-center">
+                      {item.activity_time}
+                    </td>
+                    <td className="py-2 px-4 border-b text-center justify-center gap-4">
+                      <button>
+                        <TbEdit
+                          onClick={() => setFormType2("actividad")}
+                          className="text-green-500 text-2xl mx-4 hover:text-green-700"
+                        />
+                      </button>
+                      <button onClick={(e) => handledeleteactividad(e, item.activity_id)}>
+                        <TbTrash className="text-red-500 text-2xl hover:text-red-700" />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan={6}
+                    className="px-4 py-2 text-center text-gray-500"
+                  >
+                    No hay registros disponibles
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
