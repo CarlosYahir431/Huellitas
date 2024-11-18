@@ -42,7 +42,7 @@ router.post("/register", (req, res) => {
 router.patch("/update", (req, res) => {
   const { id, name, sex, species, breed, color, characteristics } = req.body;
 
-  const sqlMascota = 'UPDATE Pets (name, sex, species, breed, color, characteristics) VALUES (?, ?, ?, ?, ?, ?, ?) WHERE id = ?';
+  const sqlMascota = 'UPDATE Pets (name, sex, species, breed, color, characteristics) xSET (?, ?, ?, ?, ?, ?, ?) WHERE id = ?';
 
   query(sqlMascota, [id, name, sex, species, breed, color, characteristics], (err, results) => {
     if (err) {
