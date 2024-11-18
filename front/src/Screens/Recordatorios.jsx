@@ -28,6 +28,11 @@ function Recordatorios() {
   const [name_alimento, setName_alimento] = useState("");
   const [fecha_alimento, setFecha_alimento] = useState("");
   const [hora_alimento, setHora_alimento] = useState("");
+  //actividad
+  const [name_actividad, setName_actividad] = useState("");
+  const [place_actividad, setPlace_actividad] = useState("");
+  const [fecha_actividad, setFecha_actividad] = useState("");
+  const [hora_actividad, setHora_actividad] = useState("");
 
   async function handlecreatesalud(e) {
     e.preventDefault();
@@ -60,6 +65,26 @@ function Recordatorios() {
       console.log(error);
     }
   }
+
+  async function handlecreateactividad(e) {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/actividad/create",
+        {
+          pet_id: 11,
+          name: name_actividad,
+          place_id: place_actividad,
+          activity_date: fecha_actividad,
+          activity_time: hora_actividad,
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   // Función para cerrar el modal
   const closeModal = () => setFormType(null);
 
@@ -203,6 +228,7 @@ function Recordatorios() {
             </div>
           </div>
         );
+      //Actividad
       case "actividad":
         return (
           <div className="modal-content flex w-full h-full max-w-4x">
@@ -214,23 +240,27 @@ function Recordatorios() {
               <h2 className="text-4xl font-semibold text-purple-500 text-center ">
                 Actividad
               </h2>
-              <form className="mt-1">
+              <form className="mt-1" onSubmit={handlecreateactividad}>
                 <div className="mb-2 my-12">
                   <label className="block text-gray-700">Actividad</label>
                   <input
                     type="name"
                     className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
                     placeholder="croquetas"
+                    value={name_actividad}
+                    onChange={(e)=>setName_actividad(e.target.value)}
                   />
                 </div>
                 <div className="mb-2">
                   <label className="block text-gray-700">Lugar</label>
-                  <select className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]">
+                  <select
+                    className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
+                    onChange={(e) => setPlace_actividad(e.target.value)}
+                    value={place_actividad}
+                  >
                     <option value="">Selecciona</option>
-                    <option value="macho">Casa</option>
-                    <option value="hembra">Clinica Huellitas</option>
-                    <option value="hembra">Parque Huellitas</option>
-                    <option value="hembra">Guarderia Huellitas</option>
+                    <option value="1">Huellitas</option>
+                    <option value="2">Casa</option>
                   </select>
                 </div>
                 <div className="flex space-x-4 mb-4">
@@ -240,6 +270,8 @@ function Recordatorios() {
                       type="date"
                       className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
                       placeholder="Edad en años"
+                      value={fecha_actividad}
+                      onChange={(e) => setFecha_actividad(e.target.value)}
                     />
                   </div>
                   <div className="w-1/2">
@@ -248,6 +280,8 @@ function Recordatorios() {
                       type="time"
                       className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
                       placeholder="Edad en años"
+                      value={hora_actividad}
+                      onChange={(e) => setHora_actividad(e.target.value)}
                     />
                   </div>
                 </div>
