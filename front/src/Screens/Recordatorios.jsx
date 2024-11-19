@@ -6,9 +6,9 @@ import Tabla_Actividad from "../components/tabla_actividad";
 import Recordatorio_Salud from "../components/recordatorio_salud";
 import Recordatorio_Actividad from "../components/recordatorio_actividad";
 import Recordatorio_comida from "../components/recordatorio_comida";
-import { TbHeart,TbPaperBag,TbPaw } from "react-icons/tb";
-function Recordatorios() {
+import { TbHeart, TbPaperBag, TbPaw } from "react-icons/tb";
 
+function Recordatorios() {
   return (
     <div className="grid lg:grid-cols-4 xl:grid-cols-6 min-h-screen">
       <Sidebar />

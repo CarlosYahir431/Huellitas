@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import { TbSearch, TbEdit, TbTrash} from "react-icons/tb";
+import { TbSearch, TbEdit, TbTrash } from "react-icons/tb";
 import axios from "axios";
+import Modal from "./modal";
+import Salud_Editar from "./salud_editar";
 
 function Tabla_Salud() {
   async function handledeletesalud(e, health_id) {
@@ -18,7 +20,9 @@ function Tabla_Salud() {
       console.error("Error al eliminar el registro:", error);
     }
   }
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
   const [salud_all, setSalud_all] = useState("");
 
   useEffect(() => {
@@ -32,6 +36,7 @@ function Tabla_Salud() {
         console.error("Error al hacer la solicitud:", error);
       });
   }, []);
+
   return (
     <>
       <h1 className="text-2xl text-red-500  font-semibold mb-6 my-12">
@@ -96,9 +101,12 @@ function Tabla_Salud() {
                     {item.event_time}
                   </td>
                   <td className="py-2 px-4 border-b text-center justify-center gap-4">
-                    <button onClick={() => setFormType2("salud")}>
+                    <button onClick={openModal}>
                       <TbEdit className="text-green-500 text-2xl mx-4 hover:text-green-700" />
                     </button>
+                    <Modal isOpen={isModalOpen} closeModal={closeModal}>
+                      <Salud_Editar />
+                    </Modal>
                     <button
                       onClick={(e) => handledeletesalud(e, item.health_id)}
                     >

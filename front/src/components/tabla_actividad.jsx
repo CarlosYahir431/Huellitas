@@ -1,6 +1,8 @@
 import { TbSearch, TbTrash, TbEdit } from "react-icons/tb";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Modal from "./modal";
+import Actividad_Editar from "./actividad_editar";
 
 function Tabla_Actividad() {
   async function handledeleteactividad(e, activity_id) {
@@ -20,6 +22,9 @@ function Tabla_Actividad() {
   }
   
   const [actividades_all, setActividades_all] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {
     axios
@@ -90,10 +95,13 @@ function Tabla_Actividad() {
                   <td className="py-2 px-4 border-b text-center justify-center gap-4">
                     <button>
                       <TbEdit
-                        onClick={() => setFormType2("actividad")}
+                        onClick={openModal}
                         className="text-green-500 text-2xl mx-4 hover:text-green-700"
                       />
                     </button>
+                    <Modal isOpen={isModalOpen} closeModal={closeModal}>
+                      <Actividad_Editar />
+                    </Modal>
                     <button
                       onClick={(e) =>
                         handledeleteactividad(e, item.activity_id)

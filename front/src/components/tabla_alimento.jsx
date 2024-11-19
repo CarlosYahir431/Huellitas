@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { TbTrash, TbEdit, TbSearch } from "react-icons/tb";
+import Comida_Editar from "./comida_editar";
+import Modal from "./modal";
 
 function Tabla_Alimento() {
   async function handledeletecomida(e, food_id) {
@@ -19,6 +21,9 @@ function Tabla_Alimento() {
     }
   }
   const [alimento_all, setAlimento_all] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
   useEffect(() => {
     axios
       .get(`http://localhost:3001/comida`)
@@ -80,9 +85,12 @@ function Tabla_Alimento() {
                     {item.feeding_time}
                   </td>
                   <td className="py-2 px-4 border-b text-center justify-center gap-4">
-                    <button onClick={() => setFormType2("alimento")}>
+                    <button onClick={openModal}>
                       <TbEdit className="text-green-500 text-2xl mx-4 hover:text-green-700" />
                     </button>
+                    <Modal isOpen={isModalOpen} closeModal={closeModal}>
+                      <Comida_Editar />
+                    </Modal>
                     <button
                       onClick={(e) => handledeletecomida(e, item.food_id)}
                     >
