@@ -2,3 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Personalización para swiper en móviles */
+.swiper-container {
+    width: 100%;
+    height: auto;
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 640px) {
+    .swiper-slide {
+        padding: 10px;
+    }
+}

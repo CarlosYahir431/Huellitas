@@ -38,7 +38,7 @@ const Sidebar = () => {
   return (
     <>
       <div
-        className={`bg-moradobajo h-full fixed lg:static w-[55%] md:w-[40%] lg:w-full transition-all z-50 duration-300 ${
+        className={`bg-moradobajo font-sans h-full fixed lg:static w-[62%] md:w-[40%] lg:w-full transition-all z-50 duration-300 ${
           showMenu ? "left-0" : "-left-full"
         }`}
       >
@@ -48,12 +48,12 @@ const Sidebar = () => {
           <h1 className="text-4xl text-white font-semibold">Huellitas</h1>
         </div>
         {/* Nav */}
-        <div className="bg-morado p-8 rounded-tr-[100px] h-[70vh] flex flex-col justify-between gap-8">
-          <nav className="flex flex-col text-white text-lg gap-8">
+        <div className="bg-morado p-8 rounded-tr-[75px] h-[70vh] flex flex-col justify-between gap-8">
+          <nav className="flex flex-col my-4 text-gray-100 text-base gap-4">
             <Link
               to={"/"}
-              className={`flex items-center gap-2 transition-all ${
-                isActive("/") ? "translate-x-4 font-bold" : ""
+              className={`flex items-center rounded-xl px-2 py-2 hover:bg-moradobajo gap-2 transition-all ${
+                isActive("/") ? "rounded-xl w-56 py-2 translate-x-4 font-semibold" : ""
               }`}
             >
               <TbHome /> Inicio
@@ -61,8 +61,8 @@ const Sidebar = () => {
 
             <Link
               to={"/recordatorios"}
-              className={`flex items-center gap-2 transition-all ${
-                isActive("/recordatorios") ? "translate-x-4 font-bold" : ""
+              className={`flex items-center rounded-xl px-2 py-2 hover:bg-moradobajo gap-2  transition-all ${
+                isActive("/recordatorios") ? "rounded-xl w-56 py-2 translate-x-4 font-semibold" : ""
               }`}
             >
               <TbCalendarStats /> Recordatorios
@@ -70,56 +70,56 @@ const Sidebar = () => {
 
             <Link
               to={"/salud"}
-              className={`flex items-center gap-2 transition-all ${
-                isActive("/salud") ? "translate-x-4 font-bold" : ""
+              className={`flex items-center rounded-xl px-2 py-2 hover:bg-moradobajo gap-2 transition-all ${
+                isActive("/salud") ?  "rounded-xl w-56 py-2 translate-x-4 font-semibold" : ""
               }`}
             >
               <TbHeart /> Salud
             </Link>
             <Link
-              to={"/alimento"}
-              className={`flex items-center gap-2 transition-all ${
-                isActive("/alimento") ? "translate-x-4 font-bold" : ""
+              to={"/alimentación"}
+              className={`flex items-center rounded-xl px-2 py-2 hover:bg-moradobajo gap-2 transition-all ${
+                isActive("/alimentación") ?  "rounded-xl w-56 py-2 translate-x-4 font-semibold" : ""
               }`}
             >
-              <TbPaperBag /> Alimento
+              <TbPaperBag /> Alimentación
             </Link>
             <Link
               to={"/actividad"}
-              className={`flex items-center gap-2 transition-all ${
-                isActive("/actividad") ? "translate-x-4 font-bold" : ""
+              className={`flex items-center rounded-xl px-2 py-2 hover:bg-moradobajo gap-2 transition-all ${
+                isActive("/actividad") ?  "rounded-xl w-56 py-2 translate-x-4 font-semibold" : ""
               }`}
             >
               <TbPaw /> Actividad
             </Link>
             <Link
-              to={"documentacion"}
-              className={`flex items-center gap-2 transition-all ${
-                isActive("/documentacion") ? "translate-x-4 font-bold" : ""
+              to={"/documentos"}
+              className={`flex items-center rounded-xl px-2 py-2 hover:bg-moradobajo gap-2 transition-all ${
+                isActive("/documentos") ?  "rounded-xl w-56 py-2 translate-x-4 font-semibold" : ""
               }`}
             >
               <TbAlignBoxLeftTop /> Documentos
             </Link>
             <Link
               to={"/lugares"}
-              className={`flex items-center gap-2 transition-all ${
-                isActive("/lugares") ? "translate-x-4 font-bold" : ""
+              className={`flex items-center rounded-xl px-2 py-2 hover:bg-moradobajo gap-2 transition-all ${
+                isActive("/lugares") ?  "rounded-xl w-56 py-2 translate-x-4 font-semibold" : ""
               }`}
             >
               <TbMap2 /> Lugares
             </Link>
             <Link
               to={"/perfil"}
-              className={`flex items-center gap-2 transition-all ${
-                isActive("/perfil") ? "translate-x-4 font-bold" : ""
+              className={`flex items-center rounded-xl px-2 py-2 hover:bg-moradobajo gap-2 transition-all ${
+                isActive("/perfil") ?  "rounded-xl w-56 py-2 translate-x-4 font-semibold" : ""
               }`}
             >
               <TbUser /> Perfil
             </Link>
           </nav>
-          <div className="bg-primary-900/50 text-white text-base font-semibold  p-4 rounded-xl">
-            <button onClick={logOut}>
-              <TbLogout /> Cerrar Sesión
+          <div className="bg-moradobajo text-white text-base font-semibold  p-2 rounded-xl">
+            <button className="flex items-center gap-4 text-white py-2 px-4 rounded-xl" onClick={logOut}>
+              <TbLogout className="text-2xl" /> Cerrar Sesión
             </button>
           </div>
         </div>
