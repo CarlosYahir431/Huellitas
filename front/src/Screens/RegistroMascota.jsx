@@ -1,5 +1,6 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState} from "react";
+import { useNavigate } from "react-router-dom";
 
 function RegistroMascota() {
   const [file, setFile] = useState(null);
@@ -10,7 +11,7 @@ function RegistroMascota() {
   const [color, setColor] = useState("");
   const [caracteristicas, setCaracteristicas] = useState("");
   const user = JSON.parse(localStorage.getItem("user"));
-
+  const navigate = useNavigate();
   // Verificar si existe y obtener el nombre
   const userId = user?.id || "null";
 
@@ -41,6 +42,7 @@ function RegistroMascota() {
         }
       );
       console.log(response);
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
