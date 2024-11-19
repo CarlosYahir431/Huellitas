@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
         h.name, 
         p.name AS place_name, 
         DATE_FORMAT(h.event_date, '%d/%m/%Y') AS event_date, 
-        h.event_time
+        DATE_FORMAT(h.event_time,'%H:%i') AS event_time
       FROM health h
       JOIN healthtypes ht ON h.health_type_id = ht.health_type_id
       JOIN places p ON h.place_id = p.place_id

@@ -8,14 +8,7 @@ const { query } = require("../db");
 const authenticateJWT = require('../middleware/middleware');
 
 router.get("/", (req, res) => {
-    const sql = `SELECT 
-a.activity_id,
-a.pet_id,
-a.name,
-p.name AS place_name, 
-date_format(a.activity_date,'%d/%m/%Y') as activity_date,
-a.activity_time
-FROM activities a JOIN places p ON a.place_id = a.place_id`;
+    const sql = `SELECT a.activity_id,a.pet_id,a.name,p.name AS place_name, date_format(a.activity_date,'%d/%m/%Y') as activity_date, date_format(a.activity_time,'%H:%i') as activity_time FROM activities a JOIN places p ON a.place_id = p.place_id`;
     query(sql, (err, results) => {
         if (err) {
             console.error(err);
@@ -88,14 +81,5 @@ router.delete("/delete", (req, res) => {
         return res.json({ message: 'Actividad eliminada exitosamente.', results });
     });
 })
-
-
-
-
-
-
-
-
-
 
 module.exports = router

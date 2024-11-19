@@ -8,7 +8,7 @@ const { query } = require("../db");
 const authenticateJWT = require("../middleware/middleware");
 
 router.get("/", (req, res) => {
-    const sql = `SELECT food_id,pet_id,name,date_format(foods.feeding_date,'%d/%m/%Y') as feeding_date,feeding_time FROM foods  `;
+    const sql = `SELECT food_id,pet_id,name,date_format(foods.feeding_date,'%d/%m/%Y') as feeding_date, DATE_FORMAT(foods.feeding_time,'%H:%i') AS feeding_time FROM foods  `;
 
     query(sql, (err, results) => {
         if (err) {

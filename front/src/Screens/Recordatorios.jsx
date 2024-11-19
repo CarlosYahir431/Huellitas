@@ -305,6 +305,7 @@ function Recordatorios() {
             </div>
           </div>
         );
+
       case "alimento":
         return (
           <div className="modal-content flex w-full h-full max-w-4x">
@@ -451,7 +452,7 @@ function Recordatorios() {
                 Editar Recordatorio de
               </h2>
               <h2 className="text-4xl font-semibold text-red-500 text-center ">
-                Salud
+                Saluda
               </h2>
               <form className="mt-1">
                 <div className="mb-2 my-12">
@@ -888,11 +889,12 @@ function Recordatorios() {
             />
             <TbSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           </div>
+
           <table className="min-w-full bg-white my-4">
             <thead>
               <tr>
                 <th className="py-2 px-4 font-medium border-b text-center">
-                  Numero
+                  ID
                 </th>
                 <th className="py-2 px-4 font-medium border-b text-center">
                   Actividad
@@ -909,6 +911,7 @@ function Recordatorios() {
                 <th className="py-2 px-4 font-medium border-b text-center"></th>
               </tr>
             </thead>
+
             <tbody>
               {actividades_all.length > 0 ? (
                 actividades_all.map((item, index) => (
