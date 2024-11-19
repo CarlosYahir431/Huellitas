@@ -12,13 +12,13 @@ function Recordatorios() {
   return (
     <div className="grid lg:grid-cols-4 xl:grid-cols-6 min-h-screen">
       <Sidebar />
-      <main className="lg:col-span-3 xl:col-span-5 bg-gray-100 p-8 h-[100vh] overflow-y-scroll">
+      <main className="lg:col-span-3 xl:col-span-5  bg-white p-8 h-[100vh] overflow-y-scroll">
         <Header />
 
         <h1 className="text-2xl font-semibold mb-8 my-12">
           Agregar Recordatorio
         </h1>
-        <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 mt-10 gap-8 drop-shadow-xl">
+        <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 mt-10 gap-8">
           <Recordatorio_Salud />
           <Recordatorio_comida />
           <Recordatorio_Actividad />
