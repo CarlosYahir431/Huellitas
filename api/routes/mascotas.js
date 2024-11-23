@@ -7,6 +7,21 @@ const router = express.Router();
 const { query } = require("../db");
 const authenticateJWT = require('../middleware/middleware');
 const secret = process.env.JWT_SECRET;
+const multer = require('multer');
+const path = require('path');
+
+// Configuración de Multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}${path.extname(file.originalname)}`);
+  }
+});
+
+const upload = multer({ storage });
+
 
 router.post("/", (req, res) => {
   const { user_id } = req.body;
@@ -22,12 +37,17 @@ router.post("/", (req, res) => {
   });
 })
 
-router.post("/register", (req, res) => {
+router.post("/register", upload.single('image'), (req, res) => {
   const { user_id, name, sex, species, breed, color, characteristics } = req.body;
+  let imageUrl = null;
 
-  const sqlMascota = 'INSERT INTO Pets (user_id, name, sex, species, breed, color, characteristics) VALUES (?, ?, ?, ?, ?, ?, ?)';
+  if (req.file) {
+    imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+  }
 
-  query(sqlMascota, [user_id, name, sex, species, breed, color, characteristics], (err, results) => {
+  const sqlMascota = 'INSERT INTO Pets (user_id, name, sex, species, breed, color, characteristics, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+
+  query(sqlMascota, [user_id, name, sex, species, breed, color, characteristics, imageUrl], (err, results) => {
     if (err) {
       console.error(err);
       return res.status(500).send('Internal server error.');
@@ -35,9 +55,7 @@ router.post("/register", (req, res) => {
 
     return res.json({ message: 'Mascota creada exitosamente.' });
   });
-
-
-})
+});
 
 router.patch("/update", (req, res) => {
   const { id, name, sex, species, breed, color, characteristics } = req.body;

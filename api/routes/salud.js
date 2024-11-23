@@ -44,6 +44,27 @@ router.get("/contar", (req, res) => {
     });
 });
 
+router.get("/health-records/:typeId", (req, res) => {
+    const typeId = req.params.typeId;
+    const sql = `SELECT 
+        h.health_id, 
+        h.pet_id, 
+        ht.name AS type_name, 
+        h.name AS health_name, 
+        p.name AS place_name, 
+        DATE_FORMAT(h.event_date, '%d/%m/%Y') AS event_date, 
+        DATE_FORMAT(h.event_time, '%H:%i') AS event_time 
+      FROM health h
+      JOIN healthtypes ht ON h.health_type_id = ht.health_type_id
+      JOIN places p ON h.place_id = p.place_id
+      WHERE h.health_type_id = ?`;
+    query(sql, [typeId], (err, results) => {
+        if (err) {
+            return res.status(500).send('Internal server error.');
+        }
+        return res.json(results);
+    });
+});
 
 router.post("/create", (req, res) => {
     const { pet_id, health_type_id, name, place_id, event_date, event_time } = req.body;

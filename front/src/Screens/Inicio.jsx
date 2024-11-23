@@ -35,6 +35,7 @@ function App() {
         id: mascota.pet_id,
         sex: mascota.sex,
         species: mascota.species,
+        img: mascota.imageUrl
       };
 
       setPerros(datosPerro);
@@ -60,9 +61,8 @@ function App() {
           <div className="col-span-1 md:col-span-2 p-4 bg-white rounded-xl flex items-center gap-6">
             {/* Imagen de la mascota */}
             <img
-              src={FotoPerro1}
+              src={perros.img}
               className="w-56 h-80 mx-6 object-cover rounded-lg"
-              alt="Perfil principal"
             />
 
             {/* Información de la mascota */}

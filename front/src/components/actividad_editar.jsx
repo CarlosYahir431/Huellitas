@@ -1,6 +1,30 @@
+import { useState } from "react";
+import axios from "axios";
+
 function Actividad_Editar() {
+  const [actividad, setActividad] = useState("");
+  const [lugar, setLugar] = useState("");
+  const [fecha, setFecha] = useState("");
+  const [hora, setHora] = useState("");
+
+  async function handleEdit(e) {
+    e.preventDefault();
+    try {
+      const response = await axios.patch("http://localhost:3001/update", {
+        name: actividad,
+        place_id: lugar,
+        activity_date: fecha,
+        activity_time: hora,
+      });
+      console.log(response);
+      window.location.reload(true);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
-    <div className="modal-content flex w-full h-full max-w-4x">
+    <div className="flex w-full h-full max-w-4x">
       {/* Sección del Formulario */}
       <div className="w-2/2 p-16 py-16">
         <h2 className="text-xl font-semibold text-purple-500 text-center ">
@@ -9,18 +33,24 @@ function Actividad_Editar() {
         <h2 className="text-4xl font-semibold text-purple-500 text-center ">
           Actividad
         </h2>
-        <form className="mt-1">
+        <form className="mt-1" onSubmit={handleEdit}>
           <div className="mb-2 my-12">
             <label className="block text-gray-700">Actividad</label>
             <input
               type="name"
               className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
               placeholder="croquetas"
+              value={actividad}
+              onChange={(e) => setActividad(e.target.value)}
             />
           </div>
           <div className="mb-2">
             <label className="block text-gray-700">Lugar</label>
-            <select className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]">
+            <select
+              className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
+              value={lugar}
+              onChange={(e) => setLugar(e.target.value)}
+            >
               <option value="">Selecciona</option>
               <option value="macho">Casa</option>
               <option value="hembra">Clinica Huellitas</option>
@@ -35,6 +65,8 @@ function Actividad_Editar() {
                 type="date"
                 className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
                 placeholder="Edad en años"
+                value={fecha}
+                onChange={(e) => setFecha(e.target.value)}
               />
             </div>
             <div className="w-1/2">
@@ -43,6 +75,8 @@ function Actividad_Editar() {
                 type="time"
                 className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
                 placeholder="Edad en años"
+                value={hora}
+                onChange={(e) => setHora(e.target.value)}
               />
             </div>
           </div>

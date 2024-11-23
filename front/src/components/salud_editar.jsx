@@ -1,6 +1,6 @@
 function Salud_Editar() {
     return (
-        <div className="modal-content flex w-full h-full max-w-4x">
+        <div className="flex w-full h-full max-w-4x">
           {/* Sección del Formulario */}
           <div className="w-2/2 p-16 py-16">
             <h2 className="text-xl font-semibold text-red-500 text-center ">

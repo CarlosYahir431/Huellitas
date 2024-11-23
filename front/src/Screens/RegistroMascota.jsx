@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState} from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function RegistroMascota() {
@@ -10,43 +10,53 @@ function RegistroMascota() {
   const [raza, setRaza] = useState("");
   const [color, setColor] = useState("");
   const [caracteristicas, setCaracteristicas] = useState("");
+  const [pets, setPets] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
-  // Verificar si existe y obtener el nombre
   const userId = user?.id || "null";
 
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFile(reader.result);
-      };
-      reader.readAsDataURL(selectedFile);
+  useEffect(() => {
+    fetchPets();
+  }, []);
+
+  const fetchPets = async () => {
+    try {
+      const response = await axios.post("http://localhost:3001/mascotas", {
+        user_id: userId,
+      });
+      setPets(response.data);
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  async function handleRegisterPet(e) {
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleRegisterPet = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("user_id", userId);
+    formData.append("name", name);
+    formData.append("sex", sexo);
+    formData.append("species", especie);
+    formData.append("breed", raza);
+    formData.append("color", color);
+    formData.append("characteristics", caracteristicas);
+    formData.append("image", file);
     try {
-      const response = await axios.post(
-        "http://localhost:3001/mascotas/register",
-        {
-          user_id: userId,
-          name: name,
-          sex: sexo,
-          species: especie,
-          breed: raza,
-          color: color,
-          characteristics: caracteristicas,
-        }
-      );
-      console.log(response);
+      await axios.post("http://localhost:3001/mascotas/register", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       navigate("/");
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <div className="flex h-screen items-center justify-center bg-gradient-to-r from-pink-100 via-blue-100 to-purple-100">
@@ -136,7 +146,7 @@ function RegistroMascota() {
                 Registrar Mascota
               </button>
 
-              <p className="text-sm text-gray-500  text-center">
+              <p className="text-sm text-gray-500 text-center">
                 ¿Ya no quieres continuar?{" "}
                 <a href="#" className="text-[#374BFF]">
                   Regresar
@@ -158,36 +168,8 @@ function RegistroMascota() {
               />
             </div>
 
-            <div className="mb-4">
-              <label className="block text-gray-700">
-                Fotografía de la Mascota
-              </label>
-              <div className="w-full px-4 py-2 mt-2 text-center border rounded-md border-dashed">
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="w-full px-4 py-2 mt-2 text-center border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
-                  onChange={handleFileChange}
-                />
-              </div>
-
-              {/* Contenedor fijo para la previsualización */}
-              <div className="mt-4 w-full h-64 bg-gray-100 rounded-xl flex justify-center items-center">
-                {file ? (
-                  <img
-                    src={file}
-                    alt="Previsualización"
-                    className="object-cover w-full h-full rounded-xl shadow-md"
-                  />
-                ) : (
-                  <div className="flex justify-center items-center w-full h-full bg-gray-200 rounded-xl">
-                    <span className="text-gray-500 text-lg">
-                      Previsualiza tu foto aquí
-                    </span>
-                  </div>
-                )}
-              </div>
-            </div>
+            <p className="block text-gray-700 mb-2">Imagen de la mascota</p>
+            <input type="file" onChange={handleFileChange} />
           </div>
         </form>
       </div>

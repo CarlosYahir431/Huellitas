@@ -47,7 +47,7 @@ function RegistroUsuario() {
 
           localStorage.setItem("user", JSON.stringify(responseLog.data));
 
-          navigate("/");
+          navigate("/mascota");
         } catch (error) {
           console.error(error);
           setError(

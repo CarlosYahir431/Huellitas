@@ -29,7 +29,7 @@ function Comida() {
           Recordatorio de
         </h2>
         <h2 className="text-4xl font-semibold text-orange-500 text-center ">
-          Alimento
+          Alimentación
         </h2>
         <form className="mt-1" onSubmit={handlecreatealimento}>
           <div className="mb-2 my-12">

@@ -43,39 +43,28 @@ function Tabla_Salud() {
         Recordatorios de Salud
       </h1>
       <div className="bg-white p-8 rounded-xl shadow-lg">
-        <div className="relative mb-4 w-full">
-          <input
-            type="text"
-            placeholder="Buscar..."
-            className="p-2 pl-10 border rounded-md w-full focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
-          />
-          <TbSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-        </div>
-
         <table className="min-w-full bg-white my-4">
           <thead>
             <tr>
-              <th className="py-2 px-4 font-medium border-b text-center">ID</th>
+              <th className="py-2 px-4 font-medium border-b text-center text-xl">ID</th>
               <th className="py-2 px-4 font-medium border-b text-center">
                 Nombre
               </th>
-              <th className="py-2 px-4 font-medium border-b text-center">
+              <th className="py-2 px-4 font-medium border-b text-center text-xl">
                 Tipo
               </th>
-              <th className="py-2 px-4 font-medium border-b text-center">
+              <th className="py-2 px-4 font-medium border-b text-center text-xl">
                 Lugar
               </th>
-              <th className="py-2 px-4 font-medium border-b text-center">
+              <th className="py-2 px-4 font-medium border-b text-center text-xl">
                 Fecha
               </th>
-              <th className="py-2 px-4 font-medium border-b text-center">
+              <th className="py-2 px-4 font-medium border-b text-center text-xl">
                 Hora
               </th>
-              <th className="py-2 px-4 font-medium border-b text-center">
+              <th className="py-2 px-4 font-medium border-b text-center text-xl">
                 Acciones
               </th>
-
-              <th className="py-2 px-4 font-medium border-b text-center"></th>
             </tr>
           </thead>
           <tbody>

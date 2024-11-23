@@ -19,6 +19,7 @@ function Recordatorios() {
           Agregar Recordatorio
         </h1>
         <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 mt-10 gap-8">
+          
           <Recordatorio_Salud />
           <Recordatorio_comida />
           <Recordatorio_Actividad />
@@ -52,6 +53,7 @@ function Recordatorios() {
         <Tabla_Salud />
         <Tabla_Alimento />
         <Tabla_Actividad />
+        
       </main>
     </div>
   );
