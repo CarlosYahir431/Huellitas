@@ -1,5 +1,5 @@
 // Importaciones
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 
@@ -41,9 +41,9 @@ function App() {
                 <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 mt-10 gap-6">
           {/* Card 1: Documentos */}
           <div className="bg-morado p-4 rounded-xl text-gray-100 flex flex-col gap-6">
-            <a href="#" className="text-base font-medium text-center">
+            <button  className="text-base font-medium text-center">
               Certificado de Vacunación
-            </a>
+            </button>
           </div>
 
           {/* Card 2: Documentos */}

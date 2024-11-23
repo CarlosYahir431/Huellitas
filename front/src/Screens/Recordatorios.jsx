@@ -92,7 +92,7 @@ function Recordatorios() {
 
                 <h1 className="text-2xl text-red-500 font-semibold mb-6 my-12">Recordatorios de Salud</h1>
 
-                <h1 className="text-xl text-gray-800 font-semibold mb-6 my-6">Medicamentos</h1>
+                <h1 className="text-xl text-gray-700 font-semibold mb-6 my-6">Medicamentos</h1>
 
                 <div className="bg-gray-200 p-4 mb-4 rounded-xl">
                     <div className="relative mb-4 w-full">
@@ -172,7 +172,7 @@ function Recordatorios() {
                     </div>
                 </div>
 
-                <h1 className="text-xl text-gray-800 font-semibold mb-6 my-6">Tratamientos</h1>
+                <h1 className="text-xl text-gray-700 font-semibold mb-6 my-6">Tratamientos</h1>
 
 
                 <div className="bg-gray-200 p-4 rounded-xl">
