@@ -1,20 +1,22 @@
 import { useState } from "react";
 import axios from "axios";
 
-function Actividad_Editar() {
-  const [actividad, setActividad] = useState("");
+function Actividad_Editar( { id, petId, activity } ) {
+  const [actividad, setActividad] = useState(activity);
   const [lugar, setLugar] = useState("");
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
-
+  
   async function handleEdit(e) {
     e.preventDefault();
     try {
-      const response = await axios.patch("http://localhost:3001/update", {
+      const response = await axios.patch("http://localhost:3001/actividad/update", {
+        pet_id: petId,
         name: actividad,
         place_id: lugar,
         activity_date: fecha,
         activity_time: hora,
+        activity_id: id
       });
       console.log(response);
       window.location.reload(true);
@@ -52,10 +54,8 @@ function Actividad_Editar() {
               onChange={(e) => setLugar(e.target.value)}
             >
               <option value="">Selecciona</option>
-              <option value="macho">Casa</option>
-              <option value="hembra">Clinica Huellitas</option>
-              <option value="hembra">Parque Huellitas</option>
-              <option value="hembra">Guarderia Huellitas</option>
+              <option value="1">Casa</option>
+              <option value="2">Clinica Huellitas</option>
             </select>
           </div>
           <div className="flex space-x-4 mb-4">

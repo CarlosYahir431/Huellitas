@@ -94,8 +94,9 @@ function Tabla_Actividad() {
                         className="text-green-500 text-2xl mx-4 hover:text-green-700"
                       />
                     </button>
+
                     <Modal isOpen={isModalOpen} closeModal={closeModal}>
-                      <Actividad_Editar />
+                      <Actividad_Editar id={item.activity_id} petId={item.pet_id} activity={item.name}/>
                     </Modal>
                     <button
                       onClick={(e) =>

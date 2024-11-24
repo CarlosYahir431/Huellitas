@@ -23,6 +23,7 @@ const ProtectedRoute = ({ element, path, requiredRoles }) => {
             },
           }
         );
+
         // Si la respuesta es exitosa, el token es válido
         if (response.status === 200) {
           setAuthenticated(true);

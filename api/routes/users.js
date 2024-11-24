@@ -31,7 +31,7 @@ router.post("/login", (req, res) => {
       if (!isPasswordValid) {
         return res.status(401).send('Correo o contraseña incorrectos.');
       }
-
+      console.log(user);
       // Generate JWT
       const token = jwt.sign({ id: user.user_id, name: user.name, rol: user.rol_id }, secret, { expiresIn: '1h' });
       delete user.password;
@@ -45,7 +45,7 @@ router.post("/login", (req, res) => {
   });
 });
 
-router.get("/validate", authenticateJWT, (req, res) => {
+router.get("/validate", authenticateJWT, (req, res) => {;
   return res.json({ user: req.user });
 })
 

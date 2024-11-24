@@ -49,10 +49,10 @@ router.post("/create", (req, res) => {
 
 router.patch("/update", (req, res) => {
     const { pet_id, name, place_id, activity_date, activity_time, activity_id } = req.body;
-
-    const sql = `UPDATE activities  (pet_id, name, place_id, activity_date, activity_time, status_id) SET (?,?,?,?,?,?) WHERE activity_id = ?`;
-
-    query(sql, [pet_id, name, place_id, activity_date, activity_time, 1, activity_id], (err, results) => {
+    console.log(req.body)
+    const sql = 'UPDATE activities SET pet_id = ?, name = ?, place_id = ?, activity_date = ?, activity_time = ?, status_id = ? WHERE activity_id = ?';
+    
+    query(sql, [pet_id, name, parseInt(place_id), activity_date, activity_time, 1, activity_id], (err, results) => {
         if (err) {
             console.error(err);
             return res.status(500).json({
