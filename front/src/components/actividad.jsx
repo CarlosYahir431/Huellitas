@@ -13,7 +13,7 @@ function Actividad() {
       const response = await axios.post(
         "http://localhost:3001/actividad/create",
         {
-          pet_id: 11,
+          pet_id: 1,
           name: name_actividad,
           place_id: place_actividad,
           activity_date: fecha_actividad,

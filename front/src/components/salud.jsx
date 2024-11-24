@@ -12,7 +12,7 @@ function Salud() {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:3001/salud/create", {
-        pet_id: 11,
+        pet_id: 1,
         health_type_id: tipo,
         name: name,
         place_id: place,

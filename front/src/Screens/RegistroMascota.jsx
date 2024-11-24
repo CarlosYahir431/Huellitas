@@ -93,8 +93,8 @@ function RegistroMascota() {
                   onChange={(e) => setSexo(e.target.value)}
                 >
                   <option value="">Selecciona</option>
-                  <option value="Macho">Macho</option>
-                  <option value="Hembra">Hembra</option>
+                  <option value="M">Macho</option>
+                  <option value="H">Hembra</option>
                 </select>
               </div>
             </div>

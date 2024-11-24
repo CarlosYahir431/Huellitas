@@ -10,7 +10,7 @@ function Comida() {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:3001/comida/create", {
-        pet_id: 11,
+        pet_id: 1,
         name: name_alimento,
         feeding_date: fecha_alimento,
         feeding_time: hora_alimento,
