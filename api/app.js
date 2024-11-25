@@ -7,6 +7,8 @@ var usersRouter = require('./routes/users');
 var mascotasRouter = require('./routes/mascotas');
 var testAPIRouter = require('./routes/testAPI');
 const saludRouter = require('./routes/salud');
+const placesRouter = require('./routes/places')
+
 
 var app = express();
 
@@ -18,10 +20,14 @@ app.use('/users', usersRouter);
 app.use('/mascotas', mascotasRouter);
 app.use('/salud', saludRouter);
 app.use('/testAPI', testAPIRouter);
+// app.use('/documents')
+app.use('/places', placesRouter); // Añadir las rutas de lugares
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
+
 
 module.exports = app;

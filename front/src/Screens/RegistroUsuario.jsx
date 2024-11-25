@@ -23,7 +23,8 @@ function RegistroUsuario() {
       setError("Las contraseñas no coinciden.");
       return;
     }
-
+  
+    console.log(axios)
     try {
       // Enviar la solicitud a tu servidor
       const response = await axios.post(

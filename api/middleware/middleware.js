@@ -1,41 +1,30 @@
-require('dotenv').config();
-
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const secret = process.env.JWT_SECRET;
 
 const authenticateJWT = (req, res, next) => {
-    const token = req.header('Authorization') ? req.header('Authorization').split(' ')[1] : null;
+  const authHeader = req.headers.authorization;
 
-    if (token) {
-        jwt.verify(token, secret, (err, user) => {
-            if (err) {
-                console.log(err);
-                return res.sendStatus(403);
-            }
+  console.log("Encabezado recibido:", authHeader); // Log para verificar el header
 
-            req.user = user;
-            next();
-        });
-    } else {
-        res.sendStatus(401);
-    }
+  if (!authHeader) {
+    return res.status(401).json({ message: "Token no proporcionado" });
+  }
+
+  const token = authHeader.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ message: "Token vacío" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, secret);
+    req.user = decoded;
+    next();
+  } catch (err) {
+    return res.status(403).json({ message: "Token inválido", error: err.message });
+  }
 };
 
-const hasPermission = (req, res, next) => {
-    const token = req.header('Authorization') ? req.header('Authorization').split(' ')[1] : null;
 
-    if (token) {
-        jwt.verify(token, secret, (err, user) => {
-            if (err) {
-                console.log(err);
-                return res.sendStatus(403);
-            }
+  
 
-            req.user = user;
-            next();
-        });
-    } else {
-        res.sendStatus(401);
-    }
-};
-module.exports = {authenticateJWT};
+module.exports = { authenticateJWT };
