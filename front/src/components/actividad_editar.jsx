@@ -30,7 +30,7 @@ function Actividad_Editar({ id, petId, activity, place, date, time }) {
           pet_id: petId,
           name: actividad,
           place_id: lugar,
-          activity_date: fechaz,
+          activity_date: fecha,
           activity_time: hora,
           activity_id: id,
         }
@@ -44,7 +44,6 @@ function Actividad_Editar({ id, petId, activity, place, date, time }) {
 
   return (
     <div className="flex w-full h-full max-w-4x">
-      {/* Sección del Formulario */}
       <div className="w-2/2 p-16 py-16">
         <h2 className="text-xl font-semibold text-purple-500 text-center ">
           Editar Recordatorio de
