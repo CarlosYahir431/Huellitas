@@ -103,6 +103,7 @@ function Tabla_Actividad() {
                       onClick={() => handleEditClick(item)}
                       className="text-green-500 text-2xl hover:text-green-700"
                     />
+                    
                     <TbTrash
                       onClick={(e) => handledeleteactividad(e, item.activity_id)}
                       className="text-red-500 text-2xl hover:text-red-700"

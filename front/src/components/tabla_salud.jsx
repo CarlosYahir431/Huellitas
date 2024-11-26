@@ -5,21 +5,8 @@ import Modal from "./modal";
 import Salud_Editar from "./salud_editar";
 
 function Tabla_Salud() {
-  async function handledeletesalud(e, health_id) {
-    e.preventDefault();
-    try {
-      const response = await axios.delete(
-        "http://localhost:3001/salud/delete",
-        {
-          data: { health_id }, // Aquí enviamos el ID en el cuerpo de la solicitud
-        }
-      );
-      console.log(response.data);
-      window.location.reload(true);
-    } catch (error) {
-      console.error("Error al eliminar el registro:", error);
-    }
-  }
+  const [selectedActivity, setSelectedActivity] = useState(null);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -36,6 +23,38 @@ function Tabla_Salud() {
         console.error("Error al hacer la solicitud:", error);
       });
   }, []);
+
+  async function handledeletesalud(e, health_id) {
+    e.preventDefault();
+    try {
+      const response = await axios.delete(
+        "http://localhost:3001/salud/delete",
+        {
+          data: { health_id }, // Aquí enviamos el ID en el cuerpo de la solicitud
+        }
+      );
+      console.log(response.data);
+      window.location.reload(true);
+    } catch (error) {
+      console.error("Error al eliminar el registro:", error);
+    }
+  }
+ // Función para manejar la edición y actualizar el estado local
+ const handleUpdateActivity = (updatedActivity) => {
+  setSalud_all((prevActividades) =>
+    prevActividades.map((activity) =>
+      activity.activity_id === updatedActivity.activity_id
+        ? { ...activity, ...updatedActivity } // Actualizar solo la actividad seleccionada
+        : activity
+    )
+  );
+  closeModal(); // Cerrar el modal después de actualizar
+};
+
+const handleEditClick = (activity) => {
+  setSelectedActivity(activity); // Establecer la actividad seleccionada
+  openModal(); // Abrir el modal
+};
 
   return (
     <>
@@ -91,7 +110,7 @@ function Tabla_Salud() {
                   </td>
                   <td className="py-2 px-4 border-b text-center justify-center gap-4">
                     <button onClick={openModal}>
-                      <TbEdit className="text-green-500 text-2xl mx-4 hover:text-green-700" />
+                      <TbEdit onClick={()=> handleEditClick(item)} className="text-green-500 text-2xl mx-4 hover:text-green-700" />
                     </button>
                     <Modal isOpen={isModalOpen} closeModal={closeModal}>
                       <Salud_Editar />
@@ -114,6 +133,17 @@ function Tabla_Salud() {
           </tbody>
         </table>
       </div>
+            {/* Modal para editar */}
+            {isModalOpen && selectedActivity && (
+        <Modal isOpen={isModalOpen} closeModal={closeModal}>
+          <Salud_Editar
+            id={selectedActivity.health_id}
+            petId={selectedActivity.pet_id}
+            name={selectedActivity.name}
+            onUpdate={handleUpdateActivity} // Pasar la función de actualización
+          />
+        </Modal>
+      )}
     </>
   );
 }
