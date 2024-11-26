@@ -15,7 +15,6 @@ function Tabla_Actividad() {
     setSelectedActivity(null); // Limpiar la actividad seleccionada
   };
 
-  // Cargar todas las actividades al iniciar el componente
   useEffect(() => {
     axios
       .get("http://localhost:3001/actividad")
@@ -36,7 +35,9 @@ function Tabla_Actividad() {
       });
       // Elimina la actividad del estado local
       setActividades_all((prevActividades) =>
-        prevActividades.filter((activity) => activity.activity_id !== activity_id)
+        prevActividades.filter(
+          (activity) => activity.activity_id !== activity_id
+        )
       );
     } catch (error) {
       console.error("Error al eliminar el registro:", error);
@@ -56,8 +57,8 @@ function Tabla_Actividad() {
   };
 
   const handleEditClick = (activity) => {
-    setSelectedActivity(activity); // Establecer la actividad seleccionada
-    openModal(); // Abrir el modal
+    setSelectedActivity(activity);
+    openModal();
   };
 
   return (
@@ -93,11 +94,21 @@ function Tabla_Actividad() {
             {actividades_all.length > 0 ? (
               actividades_all.map((item, index) => (
                 <tr key={item.activity_id}>
-                  <td className="py-2 px-4 border-b text-center">{index + 1}</td>
-                  <td className="py-2 px-4 border-b text-center">{item.name}</td>
-                  <td className="py-2 px-4 border-b text-center">{item.place_name}</td>
-                  <td className="py-2 px-4 border-b text-center">{item.activity_date}</td>
-                  <td className="py-2 px-4 border-b text-center">{item.activity_time}</td>
+                  <td className="py-2 px-4 border-b text-center">
+                    {index + 1}
+                  </td>
+                  <td className="py-2 px-4 border-b text-center">
+                    {item.name}
+                  </td>
+                  <td className="py-2 px-4 border-b text-center">
+                    {item.place_name}
+                  </td>
+                  <td className="py-2 px-4 border-b text-center">
+                    {item.activity_date}
+                  </td>
+                  <td className="py-2 px-4 border-b text-center">
+                    {item.activity_time}
+                  </td>
                   <td className="py-2 px-4 border-b text-center flex justify-center gap-4">
                     <TbEdit
                       onClick={() => handleEditClick(item)}
@@ -105,7 +116,9 @@ function Tabla_Actividad() {
                     />
                     
                     <TbTrash
-                      onClick={(e) => handledeleteactividad(e, item.activity_id)}
+                      onClick={(e) =>
+                        handledeleteactividad(e, item.activity_id)
+                      }
                       className="text-red-500 text-2xl hover:text-red-700"
                     />
                   </td>
@@ -129,7 +142,10 @@ function Tabla_Actividad() {
             id={selectedActivity.activity_id}
             petId={selectedActivity.pet_id}
             activity={selectedActivity.name}
-            onUpdate={handleUpdateActivity} // Pasar la función de actualización
+            place={selectedActivity.place_name} 
+            date={selectedActivity.activity_date} 
+            time={selectedActivity.activity_time}
+            onUpdate={handleUpdateActivity}
           />
         </Modal>
       )}

@@ -11,7 +11,7 @@ function Tabla_Alimento() {
       const response = await axios.delete(
         "http://localhost:3001/comida/delete",
         {
-          data: { food_id }, // Aquí enviamos el ID en el cuerpo de la solicitud
+          data: { food_id },
         }
       );
       console.log(response.data);
@@ -20,22 +20,44 @@ function Tabla_Alimento() {
       console.error("Error al eliminar el registro:", error);
     }
   }
-  const [alimento_all, setAlimento_all] = useState("");
+  const [alimento_all, setAlimento_all] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const [selectedFood, setSelectedFood] = useState(null);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedFood(null);
+  };
+
+  const handleUpdateFood = (updatedFood) => {
+    setAlimento_all((prevAlimentos) =>
+      prevAlimentos.map((food) =>
+        food.food_id === updatedFood.food_id
+          ? { ...food, ...updatedFood }
+          : food
+      )
+    );
+    closeModal();
+  };
+
   useEffect(() => {
     axios
       .get(`http://localhost:3001/comida`)
       .then((response) => {
-        const alimento_allData = response.data;
-        setAlimento_all(alimento_allData);
+        setAlimento_all(response.data);
       })
       .catch((error) => {
         console.error("Error al hacer la solicitud:", error);
       });
   }, []);
-
+  const handleEditClick = (food) => {
+    setSelectedFood(food);
+    openModal();
+  };
   return (
     <>
       <h1 className="text-2xl text-orange-500  font-semibold mb-6 my-12">
@@ -80,11 +102,25 @@ function Tabla_Alimento() {
                   </td>
                   <td className="py-2 px-4 border-b text-center justify-center gap-4">
                     <button onClick={openModal}>
-                      <TbEdit className="text-green-500 text-2xl mx-4 hover:text-green-700" />
+                      <TbEdit
+                        className="text-green-500 text-2xl mx-4 hover:text-green-700"
+                        onClick={() => handleEditClick(item)}
+                      />
                     </button>
-                    <Modal isOpen={isModalOpen} closeModal={closeModal}>
-                      <Comida_Editar />
-                    </Modal>
+
+                    {isModalOpen && selectedFood && (
+                      <Modal isOpen={isModalOpen} closeModal={closeModal}>
+                        <Comida_Editar
+                          id={selectedFood.food_id}
+                          petId={selectedFood.pet_id}
+                          name={selectedFood.name}
+                          date={selectedFood.feeding_date}
+                          time={selectedFood.feeding_time}
+                          onUpdate={handleUpdateFood}
+                        />
+                      </Modal>
+                    )}
+
                     <button
                       onClick={(e) => handledeletecomida(e, item.food_id)}
                     >

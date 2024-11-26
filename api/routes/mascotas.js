@@ -13,7 +13,7 @@ const path = require('path');
 // Configuración de Multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+    cb(null, '../front/public/uploads');
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}${path.extname(file.originalname)}`);
@@ -33,17 +33,20 @@ router.post("/", (req, res) => {
       return res.status(500).send('Internal server error.');
     }
 
-    return res.json(results[0]);
+    return res.json(results);
   });
 })
+
+
 
 router.post("/register", upload.single('image'), (req, res) => {
   const { user_id, name, sex, species, breed, color, characteristics } = req.body;
   let imageUrl = null;
 
   if (req.file) {
-    imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+    imageUrl = `/uploads/${req.file.filename}`;
   }
+
 
   const sqlMascota = 'INSERT INTO Pets (user_id, name, sex, species, breed, color, characteristics, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
 

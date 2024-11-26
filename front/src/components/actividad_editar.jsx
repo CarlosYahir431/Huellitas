@@ -1,33 +1,49 @@
 import { useState } from "react";
 import axios from "axios";
 
-function Actividad_Editar( { id, petId, activity } ) {
+function Actividad_Editar({ id, petId, activity, place, date, time }) {
   const [actividad, setActividad] = useState(activity);
-  const [lugar, setLugar] = useState("");
-  const [fecha, setFecha] = useState("");
-  const [hora, setHora] = useState("");
-  
+  const getPlaceId = (placeName) => {
+    const placeMapping = {
+      "casa": 1,
+      "Clinica Huellitas": 2,
+    };
+    return placeMapping[placeName.toLowerCase()] || "";
+  };
+  const [lugar, setLugar] = useState(() => getPlaceId(place));
+
+  const [fecha, setFecha] = useState(() => {
+    if (date) {
+      const [day, month, year] = date.split("/");
+      return `${year}-${month}-${day}`;
+    }
+    return "";
+  });
+  const [hora, setHora] = useState(time || "");
+
   async function handleEdit(e) {
     e.preventDefault();
     try {
-      const response = await axios.patch("http://localhost:3001/actividad/update", {
-        pet_id: petId,
-        name: actividad,
-        place_id: lugar,
-        activity_date: fecha,
-        activity_time: hora,
-        activity_id: id
-      });
+      const response = await axios.patch(
+        "http://localhost:3001/actividad/update",
+        {
+          pet_id: petId,
+          name: actividad,
+          place_id: lugar,
+          activity_date: fecha,
+          activity_time: hora,
+          activity_id: id,
+        }
+      );
       console.log(response);
       window.location.reload(true);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
   return (
     <div className="flex w-full h-full max-w-4x">
-      {/* Sección del Formulario */}
       <div className="w-2/2 p-16 py-16">
         <h2 className="text-xl font-semibold text-purple-500 text-center ">
           Editar Recordatorio de
@@ -54,8 +70,8 @@ function Actividad_Editar( { id, petId, activity } ) {
               onChange={(e) => setLugar(e.target.value)}
             >
               <option value="">Selecciona</option>
-              <option value="1">Casa</option>
-              <option value="2">Clinica Huellitas</option>
+              <option value="3">Casa</option>
+              <option value="4">Clinica Huellitas</option>
             </select>
           </div>
           <div className="flex space-x-4 mb-4">
