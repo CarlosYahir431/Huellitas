@@ -49,6 +49,24 @@ router.get("/validate", authenticateJWT, (req, res) => {;
   return res.json({ user: req.user });
 })
 
+router.get("/:id", (req, res) => {
+  const id = req.params.id; // Extract the ID from the request parameters
+  const sql = "SELECT name, email FROM users WHERE user_id = ?"; // Fix SQL query syntax
+  
+  query(sql, [id], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Internal server error.');
+    }
+
+    if (results.length === 0) {
+      return res.status(404).send('User not found.');
+    }
+
+    return res.json(results[0]); // Return the user data in the correct format
+  });
+});
+
 router.post("/register", (req, res) => {
   const { email, password, name } = req.body;
   const hashedPassword = bcrypt.hashSync(password, 10);

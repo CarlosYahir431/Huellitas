@@ -21,10 +21,11 @@ router.get("/", (req, res) => {
 });
 
 
-router.get("/contar", (req, res) => {
-    const sql = `SELECT COUNT(*) AS total FROM foods`;
+router.get("/contar/:id", (req, res) => {
+    const id = req.params.id;
+    const sql = `SELECT COUNT(*) AS total FROM foods where pet_id=?`;
 
-    query(sql, (err, results) => {
+    query(sql, [id], (err, results) => {
         if (err) {
             console.error(err);
             return res.status(500).send('Internal server error.');

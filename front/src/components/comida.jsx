@@ -5,12 +5,13 @@ function Comida() {
   const [name_alimento, setName_alimento] = useState("");
   const [fecha_alimento, setFecha_alimento] = useState("");
   const [hora_alimento, setHora_alimento] = useState("");
+  const Id = JSON.parse(localStorage.getItem("pet"));
 
   async function handlecreatealimento(e) {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:3001/comida/create", {
-        pet_id: 1,
+        pet_id: Id,
         name: name_alimento,
         feeding_date: fecha_alimento,
         feeding_time: hora_alimento,

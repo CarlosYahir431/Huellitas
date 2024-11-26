@@ -70,8 +70,8 @@ function Actividad_Editar({ id, petId, activity, place, date, time }) {
               onChange={(e) => setLugar(e.target.value)}
             >
               <option value="">Selecciona</option>
-              <option value="1">Casa</option>
-              <option value="2">Clinica Huellitas</option>
+              <option value="3">Casa</option>
+              <option value="4">Clinica Huellitas</option>
             </select>
           </div>
           <div className="flex space-x-4 mb-4">

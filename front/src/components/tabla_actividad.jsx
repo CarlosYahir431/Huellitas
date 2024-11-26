@@ -15,7 +15,6 @@ function Tabla_Actividad() {
     setSelectedActivity(null); // Limpiar la actividad seleccionada
   };
 
-  // Cargar todas las actividades al iniciar el componente
   useEffect(() => {
     axios
       .get("http://localhost:3001/actividad")
