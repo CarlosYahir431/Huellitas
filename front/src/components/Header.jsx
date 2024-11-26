@@ -1,60 +1,71 @@
 import React, { useState, useEffect } from "react";
-import FotoPerro1 from "../img/FotoPerro1.jpg";
-import FotoPerro2 from "../img/FotoPerro1.jpg";
-import FotoPerro3 from "../img/FotoPerro1.jpg";
-import { TbChevronDown, TbBell } from "react-icons/tb";
+import { TbChevronDown } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
 const Header = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [perros, setPerros] = useState({});
+  const [mascotas, setMascotas] = useState([]); // Cambiado a un array para almacenar todas las mascotas
+  const [selectedPet, setSelectedPet] = useState(null); // Para rastrear la mascota seleccionada
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?.id || "null";
-
 
   useEffect(() => {
     getPets();
   }, []);
 
   async function getPets() {
-    const response = await axios.post("http://localhost:3001/mascotas", {
-      user_id: userId,
-    });
+    try {
+      const response = await axios.post("http://localhost:3001/mascotas", {
+        user_id: userId,
+      });
 
-    if (response.data) {
-      const mascota = response.data;
-      const datosPerro = {
-        raza: mascota.breed,
-        caracteristica: mascota.characteristics,
-        color: mascota.color,
-        name: mascota.name,
-        id: mascota.pet_id,
-        sex: mascota.sex,
-        species: mascota.species,
-      };
+      if (response.data && Array.isArray(response.data)) {
+        // Asegúrate de que response.data sea un array
+        const mascotasData = response.data.map((mascota) => ({
+          id: mascota.pet_id,
+          name: mascota.name,
+          breed: mascota.breed,
+          characteristics: mascota.characteristics,
+          color: mascota.color,
+          sex: mascota.sex,
+          species: mascota.species,
+          img: mascota.image_url, // La URL completa debería estar en el backend
+        }));
 
-      setPerros(datosPerro);
+        setMascotas(mascotasData);
+
+        // Establecer la primera mascota como seleccionada si aún no se ha seleccionado
+        const petFromStorage = localStorage.getItem("pet");
+        
+        if (petFromStorage) {
+          setSelectedPet(mascotasData.find((pet) => pet.id == petFromStorage));
+
+        } else {
+          setSelectedPet(mascotasData[0]);
+        }
+        
+      }
+    } catch (error) {
+      console.error("Error fetching pets:", error);
     }
   }
 
-
-  // Lista de perfiles
-  const profiles = [
-    { id: 1, name: "Cristal", photo: FotoPerro1 },
-    { id: 2, name: "Naricitas", photo: FotoPerro2 },
-    { id: 3, name: "Abrazitos", photo: FotoPerro3 },
-  ];
-
-  // Función para alternar el menú desplegable
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
+  };
+
+  const handlePetSelection = (pet) => {
+    setSelectedPet(pet); // Actualiza la mascota seleccionada
+    localStorage.setItem("pet", pet.id); // Guarda el ID de la mascota seleccionada en el localStorage
+    setDropdownOpen(false); // Cierra el menú desplegable
+    window.location.reload();
   };
 
   return (
     <header className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8">
       <h1 className="text-2xl md:text-3xl text-morado font-bold">
-        Bienvenido, {user.username}<span className="text-gray-500"></span>
+        Bienvenido, {user?.username || "Usuario"}
       </h1>
       <nav>
         <ul className="flex items-center gap-4">
@@ -63,13 +74,14 @@ const Header = () => {
           </li>
           <li className="relative">
             <div className="flex items-center gap-2 cursor-pointer" onClick={toggleDropdown}>
+              {/* Muestra la imagen de la mascota seleccionada o una por defecto */}
               <img
-                src={FotoPerro1}
+                src={selectedPet?.img || "https://via.placeholder.com/150"}
                 className="w-10 h-10 md:w-12 md:h-12 object-cover rounded-full"
                 alt="Perfil principal"
               />
               <a className="flex items-center gap-1 text-xl font-semibold">
-                {perros.name} <TbChevronDown />
+                {selectedPet?.name || "Mascota"} <TbChevronDown />
               </a>
             </div>
 
@@ -77,17 +89,25 @@ const Header = () => {
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-10">
                 <ul className="p-2">
-                  {profiles.map((profile) => (
-                    <li key={profile.id} className="flex items-center gap-2 py-2 px-4 hover:bg-gray-100 rounded-lg cursor-pointer">
+                  {/* Lista dinámica de mascotas */}
+                  {mascotas.map((mascota) => (
+                    <li
+                      key={mascota.id}
+                      className="flex items-center gap-2 py-2 px-4 hover:bg-gray-100 rounded-lg cursor-pointer"
+                      onClick={() => handlePetSelection(mascota)} // Maneja la selección de mascotas
+                    >
                       <img
-                        src={profile.photo}
+                        src={mascota.img || "https://via.placeholder.com/150"}
                         className="w-8 h-8 object-cover rounded-full"
-                        alt={profile.name}
+                        alt={mascota.name}
                       />
-                      <span className="text-sm font-medium">{profile.name}</span>
+                      <span className="text-sm font-medium">{mascota.name}</span>
                     </li>
                   ))}
-                  <Link to={"/mascota"} className="py-2 px-4 text-morado text-sm font-medium hover:bg-gray-100 rounded-lg cursor-pointer">
+                  <Link
+                    to={"/mascota"}
+                    className="py-2 px-4 text-morado text-sm font-medium hover:bg-gray-100 rounded-lg cursor-pointer"
+                  >
                     Agregar perfil
                   </Link>
                 </ul>

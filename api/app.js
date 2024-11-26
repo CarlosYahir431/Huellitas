@@ -7,6 +7,7 @@ var mascotasRouter = require('./routes/mascotas');
 const saludRouter = require('./routes/salud');
 const comidaRouter = require('./routes/comida');
 const actividadRouter = require('./routes/actividades');
+const placesRouter = require('./routes/places')
 
 
 var app = express();
@@ -20,6 +21,7 @@ app.use('/salud', saludRouter);
 app.use('/comida', comidaRouter);
 app.use('/actividad', actividadRouter);
 app.use('/uploads', express.static('uploads'));
+app.use('/places', placesRouter); // Añadir las rutas de lugares
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

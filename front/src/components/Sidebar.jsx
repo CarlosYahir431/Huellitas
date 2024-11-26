@@ -113,14 +113,14 @@ const Sidebar = () => {
               <TbAlignBoxLeftTop /> Documentos
             </Link>
             <Link
-              to={"/lugares"}
+              to={"/places"}
               className={`flex items-center rounded-xl px-2 py-2 hover:bg-moradobajo gap-2 transition-all ${
                 isActive("/lugares")
                   ? "rounded-xl w-56 py-2 translate-x-4 font-semibold"
                   : ""
               }`}
             >
-              <TbMap2 /> Lugares
+              <TbMap2 />Lugares
             </Link>
             <Link
               to={"/perfil"}

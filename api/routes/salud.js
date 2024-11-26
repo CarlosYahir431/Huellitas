@@ -18,7 +18,7 @@ router.get("/", (req, res) => {
         DATE_FORMAT(h.event_time,'%H:%i') AS event_time
       FROM health h
       JOIN healthtypes ht ON h.health_type_id = ht.health_type_id
-      JOIN places p ON h.place_id = p.place_id
+      JOIN places p ON h.place_id = p.id
 `;
     query(sql, (err, results) => {
         if (err) {
@@ -57,7 +57,7 @@ router.get("/health-records/:typeId", (req, res) => {
         DATE_FORMAT(h.event_time, '%H:%i') AS event_time 
       FROM health h
       JOIN healthtypes ht ON h.health_type_id = ht.health_type_id
-      JOIN places p ON h.place_id = p.place_id
+      JOIN places p ON h.place_id = p.id
       WHERE h.health_type_id = ?`;
     query(sql, [typeId], (err, results) => {
         if (err) {

@@ -7,17 +7,13 @@ import Recordatorios from "./Screens/Recordatorios";
 import ProtectedRoute from "./components/protectedroute";
 import Documentos from "./Screens/documentos";
 import Perfil from "./components/Perfil";
-import Lugares from "./components/lugares";
+import Places from "./Screens/places";
 import Salud_completado from "./components/Salud_completado";
 const ADMIN = 1;
 const USUARIO = 2;
 
 function App() {
   const router = createBrowserRouter([
-    {
-      path: "/lugares",
-      element: <Lugares />,
-    },
     {
       path: "/salud",
       element: <Salud_completado />,
@@ -37,6 +33,16 @@ function App() {
     {
       path: "/login",
       element: <Login />,
+    },
+    {
+      path: "/places",
+      element: (
+        <ProtectedRoute
+          element={<Places />}
+          path="/places"
+          requiredRoles={[ADMIN, USUARIO]}
+        />
+      ),
     },
     {
       path: "/mascota",

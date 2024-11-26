@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import LugaresSelect from "../components/selectlugar";
 
 function Salud() {
   const [tipo, setTipo] = useState("");
@@ -7,8 +8,10 @@ function Salud() {
   const [place, setPlace] = useState("");
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
+
   const Id = JSON.parse(localStorage.getItem("pet"));
 
+  // Función para manejar la creación de salud
   async function handlecreatesalud(e) {
     e.preventDefault();
     try {
@@ -26,6 +29,7 @@ function Salud() {
       console.log(error);
     }
   }
+
   return (
     <div className="flex w-full h-full max-w-4x">
       <div className="w-2/2 p-16 py-16">
@@ -63,15 +67,11 @@ function Salud() {
           </div>
           <div className="mb-2">
             <label className="block text-gray-700">Lugar</label>
-            <select
-              className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
-              onChange={(e) => setPlace(e.target.value)}
+            <LugaresSelect
+              onPlaceChange={setPlace}
               value={place}
-            >
-              <option value="">Selecciona</option>
-              <option value="3">Huellitas</option>
-              <option value="4">Casa</option>
-            </select>
+              placeholder="Selecciona un lugar"
+            />
           </div>
           <div className="flex space-x-4 mb-4">
             <div className="w-1/2">

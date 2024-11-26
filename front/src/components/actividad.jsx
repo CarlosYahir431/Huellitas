@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import LugaresSelect from "../components/selectlugar";
 
 function Actividad() {
   const [name_actividad, setName_actividad] = useState("");
@@ -49,15 +50,11 @@ function Actividad() {
           </div>
           <div className="mb-2">
             <label className="block text-gray-700">Lugar</label>
-            <select
-              className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
-              onChange={(e) => setPlace_actividad(e.target.value)}
+            <LugaresSelect
+              onPlaceChange={setPlace_actividad}
               value={place_actividad}
-            >
-              <option value="">Selecciona</option>
-              <option value="3">Huellitas</option>
-              <option value="4">Casa</option>
-            </select>
+              placeholder="Selecciona un lugar"
+            />
           </div>
           <div className="flex space-x-4 mb-4">
             <div className="w-1/2">

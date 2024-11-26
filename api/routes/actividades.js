@@ -8,7 +8,7 @@ const { query } = require("../db");
 const authenticateJWT = require('../middleware/middleware');
 
 router.get("/", (req, res) => {
-    const sql = `SELECT a.activity_id,a.pet_id,a.name,p.name AS place_name, date_format(a.activity_date,'%d/%m/%Y') as activity_date, date_format(a.activity_time,'%H:%i') as activity_time FROM activities a JOIN places p ON a.place_id = p.place_id where pet_`;
+    const sql = `SELECT a.activity_id,a.pet_id,a.name,p.name AS place_name, date_format(a.activity_date,'%d/%m/%Y') as activity_date, date_format(a.activity_time,'%H:%i') as activity_time FROM activities a JOIN places p ON a.place_id = p.id where pet_id`;
     query(sql, (err, results) => {
         if (err) {
             console.error(err);
