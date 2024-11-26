@@ -21,11 +21,10 @@ router.get("/", (req, res) => {
 });
 
 
-router.get("/contar/:id", (req, res) => {
-    const id = req.params.id;
-    const sql = `SELECT COUNT(*) AS total FROM foods where pet_id=?`;
+router.get("/contar", (req, res) => {
+    const sql = `SELECT COUNT(*) AS total FROM foods`;
 
-    query(sql, [id], (err, results) => {
+    query(sql, (err, results) => {
         if (err) {
             console.error(err);
             return res.status(500).send('Internal server error.');
@@ -52,11 +51,11 @@ router.post("/create", (req, res) => {
 });
 
 router.patch("/update", (req, res) => {
-    const { pet_id, name, feeding_date, feeding_time, food_id } = req.body;
-    console.log(req.body)
-    const sql = 'UPDATE foods SET pet_id=?,name=?,feeding_date=?,feeding_time=?,status_id=? WHERE food_id = ?';
+    const { pet_id, name, feeding_date, feeding_time } = req.body;
 
-    query(sql, [pet_id, name, feeding_date, feeding_time, 1, food_id], (err, results) => {
+    const sql = `UPDATE foods (pet_id,name,feeding_date,feeding_time,status_id) SET (?,?,?,?,?,?) WHERE food_id = ?`;
+
+    query(sql, [pet_id, name, feeding_date, feeding_time, 1], (err, results) => {
         if (err) {
             console.error(err);
             return res.status(500).json({

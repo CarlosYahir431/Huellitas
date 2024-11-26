@@ -6,7 +6,6 @@ function Actividad() {
   const [place_actividad, setPlace_actividad] = useState("");
   const [fecha_actividad, setFecha_actividad] = useState("");
   const [hora_actividad, setHora_actividad] = useState("");
-  const Id = JSON.parse(localStorage.getItem("pet"));
 
   async function handlecreateactividad(e) {
     e.preventDefault();
@@ -14,7 +13,7 @@ function Actividad() {
       const response = await axios.post(
         "http://localhost:3001/actividad/create",
         {
-          pet_id: Id,
+          pet_id: 1,
           name: name_actividad,
           place_id: place_actividad,
           activity_date: fecha_actividad,
@@ -28,7 +27,7 @@ function Actividad() {
     }
   }
   return (
-    <div className="flex w-full h-full max-w-4x">
+      <div className="flex w-full h-full max-w-4x">
       <div className="w-2/2 p-16 py-16">
         <h2 className="text-xl font-semibold text-purple-500 text-center ">
           Recordatorio de
@@ -55,8 +54,8 @@ function Actividad() {
               value={place_actividad}
             >
               <option value="">Selecciona</option>
-              <option value="3">Huellitas</option>
-              <option value="4">Casa</option>
+              <option value="1">Huellitas</option>
+              <option value="2">Casa</option>
             </select>
           </div>
           <div className="flex space-x-4 mb-4">
@@ -89,7 +88,7 @@ function Actividad() {
           </button>
         </form>
       </div>
-    </div>
+      </div>
   );
 }
 

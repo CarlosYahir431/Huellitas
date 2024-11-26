@@ -7,13 +7,12 @@ function Salud() {
   const [place, setPlace] = useState("");
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
-  const Id = JSON.parse(localStorage.getItem("pet"));
 
   async function handlecreatesalud(e) {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:3001/salud/create`, {
-        pet_id: Id,
+      const response = await axios.post("http://localhost:3001/salud/create", {
+        pet_id: 1,
         health_type_id: tipo,
         name: name,
         place_id: place,
@@ -69,8 +68,8 @@ function Salud() {
               value={place}
             >
               <option value="">Selecciona</option>
-              <option value="3">Huellitas</option>
-              <option value="4">Casa</option>
+              <option value="1">Huellitas</option>
+              <option value="2">Casa</option>
             </select>
           </div>
           <div className="flex space-x-4 mb-4">

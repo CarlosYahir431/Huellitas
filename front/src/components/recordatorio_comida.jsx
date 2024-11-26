@@ -9,10 +9,10 @@ function Recordatorio_comida() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-  const Id = JSON.parse(localStorage.getItem("pet"));
+
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/comida/contar/${Id}`)
+      .get(`http://localhost:3001/comida/contar`)
       .then((response) => {
         const comidaData = response.data;
         setComida(comidaData);
@@ -37,7 +37,7 @@ function Recordatorio_comida() {
           Agregar
         </button>
         <Modal isOpen={isModalOpen} closeModal={closeModal}>
-          <Comida />
+          <Comida/>
         </Modal>
       </div>
     </>

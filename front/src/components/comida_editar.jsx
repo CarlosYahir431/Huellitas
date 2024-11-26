@@ -1,59 +1,34 @@
-import axios from "axios";
-import { useState } from "react";
+import { useParams } from "react-router-dom";
 
-function Comida_Editar({ id, petId, name, date, time }) {
-  const [alimento, setAlimento] = useState(name);
-  const [fecha, setFecha] = useState(() => {
-    if (date) {
-      const [day, month, year] = date.split("/");
-      return `${year}-${month}-${day}`;
-    }
-    return "";
-  });
-  const [hora, setHora] = useState(time || "");
-
-  async function handleEdit(e) {
-    e.preventDefault();
-    try {
-      // Convert date back to dd/mm/yyyy format
-      const response = await axios.patch(
-        "http://localhost:3001/comida/update",
-        {
-          pet_id: petId,
-          name: alimento,
-          feeding_date: fecha,
-          feeding_time: hora,
-          food_id: id,
-        }
-      );
-      console.log(response);
-      window.location.reload(true)
-      // Optional: close modal or show success message
-    } catch (error) {
-      console.error("Error updating food:", error);
-      // Handle error (show error message, etc.)
-    }
-  }
-
+function Comida_Editar() {
   return (
     <div className="flex w-full h-full max-w-4x">
+      {/* Sección del Formulario */}
       <div className="w-2/2 p-16 py-16">
-        <h2 className="text-xl font-semibold text-orange-500 text-center">
+        <h2 className="text-xl font-semibold text-orange-500 text-center ">
           Editar Recordatorio de
         </h2>
-        <h2 className="text-4xl font-semibold text-orange-500 text-center">
+        <h2 className="text-4xl font-semibold text-orange-500 text-center ">
           Alimento
         </h2>
-        <form className="mt-1" onSubmit={handleEdit}>
+        <form className="mt-1">
           <div className="mb-2 my-12">
             <label className="block text-gray-700">Alimento</label>
             <input
-              type="text"
+              type="name"
               className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
               placeholder="croquetas"
-              value={alimento}
-              onChange={(e) => setAlimento(e.target.value)}
             />
+          </div>
+          <div className="mb-2">
+            <label className="block text-gray-700">Lugar</label>
+            <select className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]">
+              <option value="">Selecciona</option>
+              <option value="macho">Casa</option>
+              <option value="hembra">Clinica Huellitas</option>
+              <option value="hembra">Parque Huellitas</option>
+              <option value="hembra">Guarderia Huellitas</option>
+            </select>
           </div>
           <div className="flex space-x-4 mb-4">
             <div className="w-1/2">
@@ -61,8 +36,7 @@ function Comida_Editar({ id, petId, name, date, time }) {
               <input
                 type="date"
                 className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
-                value={fecha}
-                onChange={(e) => setFecha(e.target.value)}
+                placeholder="Edad en años"
               />
             </div>
             <div className="w-1/2">
@@ -70,8 +44,7 @@ function Comida_Editar({ id, petId, name, date, time }) {
               <input
                 type="time"
                 className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
-                value={hora}
-                onChange={(e) => setHora(e.target.value)}
+                placeholder="Edad en años"
               />
             </div>
           </div>

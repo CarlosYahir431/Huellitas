@@ -1,6 +1,8 @@
+//Componentes
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
+import FotoPerro1 from "../img/FotoPerro1.jpg";
 import ClinicaHuellitas from "../img/Clinica Huellitas.jpg";
 import ParqueHuellitas from "../img/Parque Huellitas.jpg";
 import GuarderiaHuellitas from "../img/Guarderia Huellitas.jpg";
@@ -12,7 +14,6 @@ import axios from "axios";
 function App() {
   const [perros, setPerros] = useState({});
   const user = JSON.parse(localStorage.getItem("user"));
-  const petId = localStorage.getItem("pet"); // No es necesario JSON.parse aquí
   const userId = user?.id || "null";
 
   useEffect(() => {
@@ -20,34 +21,24 @@ function App() {
   }, []);
 
   async function getPets() {
-    try {
-      const response = await axios.post("http://localhost:3001/mascotas", {
-        user_id: userId,
-      });
+    const response = await axios.post("http://localhost:3001/mascotas", {
+      user_id: userId,
+    });
 
-      if (response.data && petId) {
-        // Busca la mascota seleccionada por su ID
-        const currentPet = response.data.find(
-          (mascota) => mascota.pet_id.toString() === petId
-        );
+    if (response.data) {
+      const mascota = response.data;
+      const datosPerro = {
+        raza: mascota.breed,
+        caracteristica: mascota.characteristics,
+        color: mascota.color,
+        name: mascota.name,
+        id: mascota.pet_id,
+        sex: mascota.sex,
+        species: mascota.species,
+        img: mascota.imageUrl
+      };
 
-        if (currentPet) {
-          const datosPerro = {
-            raza: currentPet.breed,
-            caracteristica: currentPet.characteristics,
-            color: currentPet.color,
-            name: currentPet.name,
-            id: currentPet.pet_id,
-            sex: currentPet.sex,
-            species: currentPet.species,
-            img: currentPet.image_url,
-          };
-
-          setPerros(datosPerro); // Actualiza el estado con los datos de la mascota seleccionada
-        }
-      }
-    } catch (error) {
-      console.error("Error al obtener las mascotas:", error);
+      setPerros(datosPerro);
     }
   }
 

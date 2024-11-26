@@ -9,11 +9,10 @@ function Recordatorio_Actividad() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-  const Id = JSON.parse(localStorage.getItem("pet"));
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/actividad/contar/${Id}`)
+      .get(`http://localhost:3001/actividad/contar`)
       .then((response) => {
         const actividadData = response.data;
         setActividad(actividadData);
