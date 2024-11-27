@@ -9,11 +9,21 @@ import Documentos from "./Screens/documentos";
 import Perfil from "./components/Perfil";
 import Places from "./Screens/places";
 import Salud_completado from "./components/Salud_completado";
+import Actividad_completado from "./components/Actividad_completado";
+import Alimentacion_completado from "./components/Alimentacion_completado";
 const ADMIN = 1;
 const USUARIO = 2;
 
 function App() {
   const router = createBrowserRouter([
+    {
+      path: "/alimentacion",
+      element: <Alimentacion_completado />,
+    },
+    {
+      path: "/actividad",
+      element: <Actividad_completado />,
+    },
     {
       path: "/salud",
       element: <Salud_completado />,

@@ -77,53 +77,7 @@ function Perfil() {
             </div>
           </div>
 
-          {/* Perfil de la Mascota */}
-          <div className="bg-gray-100 items-left p-8 rounded-xl flex flex-col gap-2">
-            <h1 className="text-2xl pb-4 text-gray-800 mx-4 font-bold">Perfil de la Mascota</h1>
-
-            <section className="mx-4 grid grid-cols-1 md:grid-cols-1 xl:grid-cols-2 gap-8">
-              <div>
-                <img
-                  src={FotoPerro1}
-                  className="w-full h-full object-cover rounded-lg"
-                  alt="Perfil principal"
-                />
-              </div>
-              <div>
-                <h1 className="text-3xl pb-6 text-morado font-bold">Cristal</h1>
-                <p className="text-base font-semibold text-gray-700">
-                  Edad: <span className="text-base font-normal text-gray-500">5 años</span>
-                </p>
-                <p className="text-base font-semibold text-gray-700">
-                  Sexo: <span className="text-base font-normal text-gray-500">Femenino</span>
-                </p>
-                <p className="text-base font-semibold text-gray-700">
-                  Especie: <span className="text-base font-normal text-gray-500">Perro</span>
-                </p>
-                <p className="text-base font-semibold text-gray-700">
-                  Raza: <span className="text-base font-normal text-gray-500">Golden Retriever</span>
-                </p>
-                <p className="text-base font-semibold text-gray-700">
-                  Color: <span className="text-base font-normal text-gray-500">Beige</span>
-                </p>
-                <p className="text-base font-semibold text-gray-700">
-                  Características:{" "}
-                  <span className="text-base font-normal text-gray-500">
-                    Tiene una mancha en la patita izquierda trasera
-                  </span>
-                </p>
-              </div>
-            </section>
-
-            <div className="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-1 mt-4 mx-4">
-              <button
-                type="submit"
-                className="bg-morado font-medium text-white py-3 rounded-lg text-center hover:bg-blue-700 transition duration-200"
-              >
-                Actualizar Información
-              </button>
-            </div>
-          </div>
+         
         </section>
       </main>
     </div>

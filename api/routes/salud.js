@@ -82,18 +82,41 @@ router.post("/create", (req, res) => {
 })
 
 router.patch("/update", (req, res) => {
-    const { health_id, pet_id, health_type_id, name, place_id, event_date, event_time } = req.body;
+    const {
+        health_id,
+        pet_id,
+        health_type_id,
+        name,
+        place_id,
+        event_date,
+        event_time,
+    } = req.body;
 
-    const sql = `UPDATE health(pet_id,health_type_id,name,place_id,event_date,event_time, status_id) SET (?, ?, ?, ?, ?, ?, ?) WHERE health_id=?`;
-    query(sql, [pet_id, health_type_id, name, place_id, event_date, event_time, 1, health_id], (err, results) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).send('Internal server error.');
-        }
+    // Consulta SQL
+    const sql = `
+        UPDATE health 
+        SET pet_id = ?, health_type_id = ?, name = ?, place_id = ?, event_date = ?, event_time = ?, status_id = ?
+        WHERE health_id = ?
+    `;
 
-        return res.json({ message: 'Salud actualizado exitosamente.', results });
-    });
-})
+    // Ejecución de la consulta
+    query(
+        sql,
+        [pet_id, parseInt(health_type_id), name, parseInt(place_id), event_date, event_time, 1, health_id],
+        (err, results) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).send("Internal server error.");
+            }
+
+            return res.json({
+                message: "Salud actualizado exitosamente.",
+                results,
+            });
+        }
+    );
+});
+
 
 router.delete("/delete", (req, res) => {
     const { health_id } = req.body;

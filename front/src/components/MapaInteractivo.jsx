@@ -109,18 +109,19 @@ const MapaInteractivo = ({ onLugarSeleccionado, origen, destino }) => {
   return (
     <div className="flex flex-col items-center">
       <div className="w-full max-w-7xl bg-white rounded-lg shadow-lg p-6">
-        <h2 className="text-lg font-bold mb-4">Buscar Veterinarias</h2>
+        <h2 className="text-lg font-semibold mb-4">Buscar Veterinarias</h2>
         <div className="mb-4 flex items-center gap-2">
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Escribe el nombre o categoría"
-            className="border border-gray-300 rounded-md px-4 py-2 w-full"
-          />
+   
+            className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
+             />
           <button
             onClick={handleBuscarVeterinarias}
-            className="bg-blue-500 text-white px-4 py-2 rounded-md"
+            className="bg-morado text-white px-4 py-2 rounded-md"
           >
             Buscar
           </button>

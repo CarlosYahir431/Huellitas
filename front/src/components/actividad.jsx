@@ -42,7 +42,7 @@ function Actividad() {
             <label className="block text-gray-700">Actividad</label>
             <input
               type="name"
-              className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
+              className="w-full text-gray-700 px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
               placeholder="croquetas"
               value={name_actividad}
               onChange={(e) => setName_actividad(e.target.value)}
@@ -52,6 +52,7 @@ function Actividad() {
             <label className="block text-gray-700">Lugar</label>
             <LugaresSelect
               onPlaceChange={setPlace_actividad}
+              className="text-gray-700"
               value={place_actividad}
               placeholder="Selecciona un lugar"
             />
@@ -61,7 +62,7 @@ function Actividad() {
               <label className="block text-gray-700">Fecha</label>
               <input
                 type="date"
-                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
+                className="w-full text-gray-700 px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
                 placeholder="Edad en años"
                 value={fecha_actividad}
                 onChange={(e) => setFecha_actividad(e.target.value)}
@@ -71,7 +72,7 @@ function Actividad() {
               <label className="block text-gray-700">Hora</label>
               <input
                 type="time"
-                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
+                className="w-full text-gray-700 px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
                 placeholder="Edad en años"
                 value={hora_actividad}
                 onChange={(e) => setHora_actividad(e.target.value)}

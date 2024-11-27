@@ -37,7 +37,7 @@ function Comida() {
             <label className="block text-gray-700">Alimento</label>
             <input
               type="text"
-              className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
+              className="w-full text-gray-700 px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
               value={name_alimento}
               name="name_alimento"
               onChange={(e) => setName_alimento(e.target.value)}
@@ -48,7 +48,7 @@ function Comida() {
               <label className="block text-gray-700">Fecha</label>
               <input
                 type="date"
-                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
+                className="w-full text-gray-700 px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
                 placeholder="Edad en años"
                 value={fecha_alimento}
                 name="fecha_alimento"
@@ -59,7 +59,7 @@ function Comida() {
               <label className="block text-gray-700">Hora</label>
               <input
                 type="time"
-                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
+                className="w-full text-gray-700 px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#374BFF]"
                 placeholder="Edad en años"
                 value={hora_alimento}
                 name="hora"

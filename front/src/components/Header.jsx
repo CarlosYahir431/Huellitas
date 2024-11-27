@@ -64,8 +64,8 @@ const Header = () => {
 
   return (
     <header className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8">
-      <h1 className="text-2xl md:text-3xl text-morado font-bold">
-        Bienvenido, {user?.username || "Usuario"}
+      <h1 className="text-2xl md:text-3xl text-gray-700 font-regular">
+        Bienvenido, <span className="text-morado font-bold">{user?.username || "Usuario"}</span>
       </h1>
       <nav>
         <ul className="flex items-center gap-4">
@@ -87,13 +87,13 @@ const Header = () => {
 
             {/* Menú desplegable */}
             {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-10">
-                <ul className="p-2">
+              <div className="absolute right-0 mt-4 w-48 bg-white border rounded-lg shadow-lg z-10">
+                <ul className="p-4">
                   {/* Lista dinámica de mascotas */}
                   {mascotas.map((mascota) => (
                     <li
                       key={mascota.id}
-                      className="flex items-center gap-2 py-2 px-4 hover:bg-gray-100 rounded-lg cursor-pointer"
+                      className="flex items-center mb-4 gap-2 py-2 px-4 hover:bg-gray-100 rounded-lg cursor-pointer"
                       onClick={() => handlePetSelection(mascota)} // Maneja la selección de mascotas
                     >
                       <img
@@ -106,7 +106,7 @@ const Header = () => {
                   ))}
                   <Link
                     to={"/mascota"}
-                    className="py-2 px-4 text-morado text-sm font-medium hover:bg-gray-100 rounded-lg cursor-pointer"
+                    className="py-2 px-8 text-morado text-sm font-medium hover:bg-gray-100 rounded-lg cursor-pointer"
                   >
                     Agregar perfil
                   </Link>

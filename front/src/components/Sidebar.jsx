@@ -83,7 +83,7 @@ const Sidebar = () => {
               <TbHeart /> Salud
             </Link>
             <Link
-              to={"/alimentación"}
+              to={"/alimentacion"}
               className={`flex items-center rounded-xl px-2 py-2 hover:bg-moradobajo gap-2 transition-all ${
                 isActive("/alimentación")
                   ? "rounded-xl w-56 py-2 translate-x-4 font-semibold"

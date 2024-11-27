@@ -25,14 +25,14 @@ function Recordatorio_Actividad() {
 
   return (
     <div className="bg-purple-500 p-8 rounded-xl text-gray-300 flex flex-col gap-2">
-      <TbPaw className="text-5xl" />
+      <TbPaw className="text-5xl text-white" />
       <h4 className="text-2xl text-white">Actividad</h4>
       <span className="text-5xl text-white">
         {actividad.total !== undefined ? actividad.total : "Cargando..."}
       </span>{" "}
-      <span className="text-base text-gray-100">Recordatorios</span>
+      <span className="text-lg text-gray-100">Recordatorios</span>
       <button
-        className="py-3 px-3 bg-gray-100 font-medium mt-auto text-purple-500 rounded-full"
+        className="py-3 px-3 bg-gray-100 text-lg font-medium mt-auto text-purple-500 rounded-full"
         onClick={openModal}
       >
         Agregar

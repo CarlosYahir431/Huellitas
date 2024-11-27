@@ -6,7 +6,7 @@ import Tabla_Actividad from "../components/tabla_actividad";
 import Recordatorio_Salud from "../components/recordatorio_salud";
 import Recordatorio_Actividad from "../components/recordatorio_actividad";
 import Recordatorio_comida from "../components/recordatorio_comida";
-import { TbHeart, TbPaperBag, TbPaw } from "react-icons/tb";
+import { TbHeart, TbPaperBag, TbPaw, TbBellRinging, TbClock } from "react-icons/tb";
 
 function Recordatorios() {
   return (
@@ -23,30 +23,65 @@ function Recordatorios() {
           <Recordatorio_Salud />
           <Recordatorio_comida />
           <Recordatorio_Actividad />
-
-          {/* Card 2: Estado de la Mascota */}
-          <div className="p-4 bg-white rounded-xl flex flex-col justify-between gap-4">
-            <h1 className="text-2xl text-center font-semibold mb-4 my-4 gap-8">
-              Estado de la Mascota
+{/* Card 3: Notificaciones */}
+<div className="p-4 bg-slate-100 rounded-xl flex flex-col justify-center gap-2">
+            <h1 className="text-2xl text-center text-gray-800 font-semibold  my-2 mb-8 ">
+              Eventos de Hoy
             </h1>
-            <div className="flex items-center gap-4 bg-gray-100 rounded-xl p-2">
-              <TbHeart className="text-4xl text-red-500" />
-              <div>
-                <p className="text-gray-500">25%</p>
+
+            <div className="flex items-center gap-4 bg-slate-200 rounded-xl p-4 mb-1">
+              <TbBellRinging className="text-3xl text-center text-morado" />
+              <div className="flex justify-between items-center w-full">
+                <div>
+                  <h3 className="font-bold text-gray-700 text-sm">Vacuna</h3>
+                  <p className="text-gray-500 font-medium text-sm">
+                    <span>Veterinaria Piccolo Cane</span>
+                  </p>
+                  
+                </div>
+                <div className="flex items-center text-gray-500 text-sm">
+                  <TbClock />
+                  <span className="ml-1 text-xs">21:30 hrs</span>
+                </div>
               </div>
             </div>
-            <div className="flex items-center gap-4 bg-gray-100 rounded-xl p-2">
-              <TbPaperBag className="text-4xl text-orange-500" />
-              <div>
-                <p className="text-gray-500">50%</p>
+
+
+            <div className="flex items-center gap-4 bg-slate-200 rounded-xl p-4 mb-1">
+              <TbBellRinging className="text-3xl text-center text-morado" />
+              <div className="flex justify-between items-center w-full">
+                <div>
+                  <h3 className="font-bold text-gray-700 text-sm">Dar Alimento</h3>
+                  <p className="text-gray-500 font-medium text-sm">
+                    <span></span>
+                  </p>
+                  
+                </div>
+                <div className="flex items-center text-gray-500 text-sm">
+                  <TbClock />
+                  <span className="ml-1 text-xs">12:00 hrs</span>
+                </div>
               </div>
             </div>
-            <div className="flex items-center gap-4 bg-gray-100 rounded-xl p-2">
-              <TbPaw className="text-4xl text-purple-500" />
-              <div>
-                <p className="text-gray-500">100%</p>
+
+            <div className="flex items-center gap-4 bg-slate-200 rounded-xl p-4 mb-1">
+              <TbBellRinging className="text-3xl text-center text-morado" />
+              <div className="flex justify-between items-center w-full">
+                <div>
+                  <h3 className="font-bold text-gray-700 text-sm">Dar un Paseo</h3>
+                  <p className="text-gray-500 font-medium text-sm">
+                    <span>CHICO PARK</span>
+                  </p>
+                  
+                </div>
+                <div className="flex items-center text-gray-500 text-sm">
+                  <TbClock />
+                  <span className="ml-1 text-xs">19:00 hrs</span>
+                </div>
               </div>
             </div>
+  
+
           </div>
         </section>
 

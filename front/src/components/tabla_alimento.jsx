@@ -63,23 +63,23 @@ function Tabla_Alimento() {
       <h1 className="text-2xl text-orange-500  font-semibold mb-6 my-12">
         Recordatorios de Alimentación
       </h1>
-      <div className="bg-white p-8 rounded-xl shadow-lg">
-        <table className="min-w-full bg-white my-4">
+      <div className="bg-gray-200 p-4 mb-4 rounded-xl">
+        <table className="hidden md:table w-full text-sm my-4">
           <thead>
-            <tr>
-              <th className="py-2 px-4 font-medium border-b text-center text-xl">
+            <tr className="text-gray-800">
+              <th className="py-2 px-4 font-medium border-b text-center text-lg">
                 ID
               </th>
-              <th className="py-2 px-4 font-medium border-b text-center text-xl">
+              <th className="py-2 px-4 font-medium border-b text-center text-lg">
                 Nombre
               </th>
-              <th className="py-2 px-4 font-medium border-b text-center text-xl">
+              <th className="py-2 px-4 font-medium border-b text-center text-lg">
                 Fecha
               </th>
-              <th className="py-2 px-4 font-medium border-b text-center text-xl">
+              <th className="py-2 px-4 font-medium border-b text-center text-lg">
                 Hora
               </th>
-              <th className="py-2 px-4 font-medium border-b text-center text-xl">
+              <th className="py-2 px-4 font-medium border-b text-center text-lg">
                 Acciones
               </th>
             </tr>
@@ -87,7 +87,7 @@ function Tabla_Alimento() {
           <tbody>
             {alimento_all.length > 0 ? (
               alimento_all.map((item, index) => (
-                <tr key={item.food_id}>
+                <tr key={item.food_id} className="text-gray-500">
                   <td className="py-2 px-4 border-b text-center">
                     {index + 1}
                   </td>

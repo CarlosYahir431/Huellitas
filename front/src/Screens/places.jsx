@@ -62,6 +62,7 @@ const Lugares = () => {
       setError("No se encontró el token de autenticación.");
     }
   };
+
   const handleEliminarLugar = (id) => {
     const user = JSON.parse(localStorage.getItem("user"));
     const token = user ? user.token : null;
@@ -86,6 +87,7 @@ const Lugares = () => {
       setError("No se encontró el token de autenticación.");
     }
   };
+
   return (
     <div className="grid lg:grid-cols-4 xl:grid-cols-6 min-h-screen">
       <Sidebar />
@@ -106,8 +108,8 @@ const Lugares = () => {
           </button>
         </div>
         {isMapaOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white rounded-lg shadow-lg p-6 w-11/12 sm:w-2/3 lg:w-1/3">
+          <div className="fixed inset-0 bg-black bg-opacity-20 flex justify-center items-center z-50">
+            <div className="bg-gray-100 rounded-lg shadow-lg p-6 w-11/12 sm:w-2/3 lg:w-1/3">
               <h2 className="text-lg font-bold mb-4">
                 {rutaLugar
                   ? `Ruta hacia ${rutaLugar.nombre}` 
@@ -133,8 +135,9 @@ const Lugares = () => {
             </div>
           </div>
         )}
+       
         <div className="mt-10">
-          <h2 className="text-lg font-bold mb-4">Lugares Seleccionados:</h2>
+          <h2 className="text-xl font-semibold mb-6">Lugares Seleccionados:</h2>
           <Swiper
             slidesPerView={5}
             spaceBetween={8}
@@ -157,8 +160,7 @@ const Lugares = () => {
             {lugares.map((lugar, index) => (
               <SwiperSlide key={index} className="flex justify-center">
                 <div
-                  className="bg-white p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 cursor-pointer"
-                  style={{
+ className="bg-gray-100 p-8 rounded-xl text-gray-300 flex flex-col gap-6 mx-2 transform hover:scale-90 transition-transform duration-300 cursor-pointer"                  style={{
                     maxWidth: "300px",
                     minHeight: "400px",
                     display: "flex",

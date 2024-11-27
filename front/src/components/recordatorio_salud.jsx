@@ -25,15 +25,15 @@ function Recordatorio_Salud() {
 
   return (
     <div className="bg-red-500 p-8 rounded-xl text-gray-300 flex flex-col gap-2">
-      <TbHeart className="text-5xl" />
+      <TbHeart className="text-5xl text-white" />
       <h4 className="text-2xl text-white">Salud</h4>
       {/* Mostrar el total directamente */}
       <span className="text-5xl text-white">
         {salud.total !== undefined ? salud.total : "Cargando..."}
       </span>
-      <span className="text-base text-gray-100">Recordatorios</span>
+      <span className="text-lg text-gray-100">Recordatorios</span>
       <button
-        className="py-3 px-3 bg-gray-100 font-medium mt-auto text-orange-500 rounded-full"
+        className="py-3 px-3 bg-gray-100 text-lg font-medium mt-auto text-orange-500 rounded-full"
         onClick={openModal}
       >
         Agregar

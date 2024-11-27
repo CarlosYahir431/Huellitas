@@ -24,14 +24,14 @@ function Recordatorio_comida() {
   return (
     <>
       <div className="bg-orange-500 p-8 rounded-xl text-gray-300 flex flex-col gap-2">
-        <TbPaperBag className="text-5xl " />
+        <TbPaperBag className="text-5xl text-white" />
         <h4 className="text-2xl text-white">Alimento</h4>
         <span className="text-5xl text-white">
           {comida.total !== undefined ? comida.total : "Cargando..."}
         </span>
-        <span className="text-base text-gray-100">Recordatorios</span>
+        <span className="text-lg text-gray-100">Recordatorios</span>
         <button
-          className="py-3 px-3 bg-gray-100 font-medium mt-auto text-orange-500 rounded-full"
+          className="py-3 px-3 bg-gray-100 text-lg font-medium mt-auto text-orange-500 rounded-full"
           onClick={openModal}
         >
           Agregar
